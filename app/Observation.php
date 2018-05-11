@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use App\Host;
 use App\Service;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
 use Spatie\SslCertificate\SslCertificate;
 
 class Observation extends Model

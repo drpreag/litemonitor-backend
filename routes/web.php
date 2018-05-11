@@ -21,8 +21,11 @@ $router->group(['prefix' => 'api'], function() use ($router) {
 	$router->get('users', 'UsersController@index');
 	$router->get('user/{id}', 'UsersController@show');
 	$router->post('user', 'UsersController@store');	
-	$router->put('user', 'UsersController@store');
+	$router->put('user', 'UsersController@update');
 	$router->delete('user/{id}', 'UsersController@destroy');
+
+	// Users API
+	$router->get('roles', 'RolesController@index');
 
 	// Services API
 	$router->get('services', 'ServicesController@index');	
@@ -32,7 +35,7 @@ $router->group(['prefix' => 'api'], function() use ($router) {
 	$router->get('hosts', 'HostsController@index');	
 	$router->get('host/{id}', 'HostsController@show');	
 	$router->post('host', 'HostsController@store');	
-	$router->put('host', 'HostsController@update');
+	$router->put('host', 'HostsController@update');	
 	$router->delete('host/{id}', 'HostsController@destroy');
 	$router->get('host-stats', 'HostsController@hostStats');	
 

@@ -78,15 +78,16 @@ class HostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    //public function update(Request $request, $id)
     public function update(Request $request)
     {
         // validation
         $this->validate(
             $request,
             array(
-                'name'          => 'required|unique:hosts|max:64',
+                'name'          => 'required|max:64|unique:hosts,name,'.$request->id,
                 'description'   => 'max:255',
-                'fqdn'          => 'required|unique:hosts|max:255',
+                'fqdn'          => 'required|max:255|unique:hosts,fqdn,'.$request->id,
                 'icmp_probe'    => 'required|integer|min:0|max:1'
             )
         );
@@ -100,7 +101,7 @@ class HostsController extends Controller
         $host->icmp_probe = $request->icmp_probe ? true : false;
 
         $host->save();
-
+    
         return new HostResource($host);
     }    
 

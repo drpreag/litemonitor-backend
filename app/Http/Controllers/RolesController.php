@@ -16,10 +16,11 @@ class RolesController extends Controller
      */
     public function index(Request $request)
     {
-        $page = intval ($request->input('page', 1));
-        $per_page = intval ($request->input('per_page', 15));
+        //$page = intval ($request->input('page', 1));
+        //$per_page = intval ($request->input('per_page', 15));
+        //$roles = Role::paginate($per_page, ['*'], 'page', $page);
 
-        $roles = Role::paginate($per_page, ['*'], 'page', $page);
+        $roles = Role::orderby('id')->get();
         return new RoleCollection($roles);
     }
 

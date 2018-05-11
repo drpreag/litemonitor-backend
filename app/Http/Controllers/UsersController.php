@@ -7,6 +7,8 @@ use App\User;
 use App\Http\Resources\User as UserResource;
 use App\Http\Resources\UserCollection;
 
+use Illuminate\Support\Facades\Log;
+
 class UsersController extends Controller
 {
     /**
@@ -24,32 +26,66 @@ class UsersController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage or update old one.
+     * Store a newly created resource in storage, POST request
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        if ($request->isMethod('put')) {    // put update
-            $user = User::findOrFail($request->id);
-            $user->exists = true;
-        }
-        else { // post, new one
-            $user = new User;      
-            $user->email = $request->email;        
-            if ($request->has('password')) 
-                $user->password = $request->password;
-        }
+        $this->validate(
+            $request,
+            array(
+                'name'          => 'required|max:255',
+                'email'         => 'required|min:5|max:255|unique:users,email,'.$request->id,
+                'role_id'       => 'required|integer|min:0|max:9',
+                'active'        => 'required|integer|min:0|max:1'
+            )
+        );
+
+        $user = new User;      
+
         $user->name = $request->name;
-        if ($request->has('active'))
-            $user->active = $request->active ? true : false; // 1 : 0
-        if ($request->has('role_id'))
-            $user->role_id = $request->role_id;
+        $user->email = $request->email;
+        $user->role_id = $request->role_id;        
+        $user->active = $request->active;
+
         $user->save();
 
         return new UserResource($user);
     }
+
+    /**
+     * Store updated record, PUT request
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request)
+    {
+
+        $this->validate(
+            $request,
+            array(
+                'name'          => 'required|max:255',
+                'email'         => 'required|min:5|max:255|unique:users,email,'.$request->id,
+                'role_id'       => 'required|integer|min:0|max:9',
+                'active'        => 'required|integer|min:0|max:1'
+            )
+        );
+
+        $user = User::findOrFail($request->id);
+        $user->exists = true;
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->role_id = $request->role_id;
+        $user->active = $request->active;// ? true : false;
+          
+        $user->save();
+
+        return new UserResource($user);
+    }    
 
     /**
      * Display the specified resource.

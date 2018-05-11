@@ -17,15 +17,12 @@ class Role extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
             'name' => $this->name,
-            'description' => $this->description,
-            'creator_id' => $this->creator_id,
-            'creator_name' => $this->isCreator->name,
-            'active' => $this->active,
-            'users' => UserResource::collection($this->users),
-            'created_at' => $this->created_at->toDateTimeString(),
-            'updated_at' => $this->updated_at->toDateTimeString(),
+            'id' => $this->id,            
+            //'description' => $this->description,
+            //'active' => $this->active,
+            //'created_at' => $this->created_at->toDateTimeString(),
+            //'updated_at' => $this->updated_at->toDateTimeString(),
         ];
     }
 }

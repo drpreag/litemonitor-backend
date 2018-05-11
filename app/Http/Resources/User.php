@@ -22,7 +22,7 @@ class User extends JsonResource
             'email' => $this->email,
             'active' => $this->active,
             'role_id' => $this->role_id,
-            //'role_name' => $this->hasRole->name,        // derived
+            'role_name' => isset($this->hasRole->name) ? $this->hasRole->name : '',
             'created_at' => $this->created_at->toDateTimeString(),
             'updated_at' => $this->updated_at->toDateTimeString()
         ];
