@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\Host;
 use App\Http\Resources\Host as HostResource;
 use App\Http\Resources\HostCollection;
+use App\Ping;
+use App\Http\Resources\Ping as PingResource;
+use App\Http\Resources\PingCollection;
+
 use Carbon\Carbon as Carbon;
 use Illuminate\Support\Facades\Log;
 
@@ -135,5 +139,16 @@ class HostsController extends Controller
         $stats['non_monitored'] = Host::where('icmp_probe',0)->get()->count();
 
         return json_encode($stats);
+    }    
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPings($id)
+    {
+        $pings = Ping::where('host_id',$id)->orderby('id', 'desc')->take(60)->get();
+        return new PingCollection($pings);
     }    
 }

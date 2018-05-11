@@ -39,6 +39,9 @@ $router->group(['prefix' => 'api'], function() use ($router) {
 	$router->delete('host/{id}', 'HostsController@destroy');
 	$router->get('host-stats', 'HostsController@hostStats');	
 
+	// Pings API
+	$router->get('host/{id}/pings', 'HostsController@getPings');
+
 	// Flapping API
 	$router->get('flappings', 'FlappingsController@index');	
 
