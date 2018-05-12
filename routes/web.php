@@ -26,6 +26,10 @@ $router->group(['prefix' => 'api'], function() use ($router) {
 
 	// Users API
 	$router->get('roles', 'RolesController@index');
+	$router->get('role/{id}', 'RolesController@show');
+	$router->post('role', 'RolesController@store');	
+	$router->put('role', 'RolesController@update');
+	$router->delete('role/{id}', 'RolesController@destroy');
 
 	// Services API
 	$router->get('services', 'ServicesController@index');	

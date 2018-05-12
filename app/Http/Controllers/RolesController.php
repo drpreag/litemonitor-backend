@@ -41,8 +41,6 @@ class RolesController extends Controller
         }
         $role->name = $request->name;
         $role->description = $request->description;
-        $role->creator_id = $request->creator_id;        
-        $role->active = $request->active ? true : false; // 1 : 0
         $role->save();
 
         return new RoleResource($role);

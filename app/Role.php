@@ -17,14 +17,4 @@ class Role extends Model
         return $this->hasMany('App\User', 'role_id');
     }
 
-    /**
-     * Relation
-     *
-     * @return App\User
-     */
-    public function isCreator()
-    {
-        return $this->belongsTo('App\User', 'creator_id', 'id');
-    }  
-
 }

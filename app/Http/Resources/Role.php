@@ -18,11 +18,10 @@ class Role extends JsonResource
     {
         return [
             'name' => $this->name,
-            'id' => $this->id,            
-            //'description' => $this->description,
-            //'active' => $this->active,
-            //'created_at' => $this->created_at->toDateTimeString(),
-            //'updated_at' => $this->updated_at->toDateTimeString(),
+            'id' => $this->id,
+            'description' => $this->description,
+            'created_at' => $this->created_at->toDateTimeString(),
+            'updated_at' => $this->updated_at->toDateTimeString(),
         ];
     }
 }
