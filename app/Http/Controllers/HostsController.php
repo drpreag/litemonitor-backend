@@ -22,10 +22,11 @@ class HostsController extends Controller
      */
     public function index(Request $request)
     {
-        $page = intval ($request->input('page', 1));
-        $per_page = intval ($request->input('per_page', 15));
+        //$page = intval ($request->input('page', 1));
+        //$per_page = intval ($request->input('per_page', 15));
+        //$hosts = Host::paginate($per_page, ['*'], 'page', $page);
 
-        $hosts = Host::paginate($per_page, ['*'], 'page', $page);
+        $hosts = Host::orderBy('icmp_status')->orderBy('icmp_probe')->get();
         return new HostCollection($hosts);
     }
 

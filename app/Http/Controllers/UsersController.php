@@ -18,10 +18,11 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
-        $page = intval ($request->input('page', 1));
-        $per_page = intval ($request->input('per_page', 15));
-
-        $users = User::paginate($per_page, ['*'], 'page', $page);
+        //$page = intval ($request->input('page', 1));
+        //$per_page = intval ($request->input('per_page', 15));
+        //$users = User::paginate($per_page, ['*'], 'page', $page);
+        
+        $users = User::all();
         return new UserCollection($users);
     }
 

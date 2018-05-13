@@ -19,10 +19,11 @@ class ServicesController extends Controller
      */
     public function index(Request $request)
     {
-        $page = intval ($request->input('page', 1));
-        $per_page = intval ($request->input('per_page', 15));
+        //$page = intval ($request->input('page', 1));
+        //$per_page = intval ($request->input('per_page', 15));
 
-        $services = Service::paginate($per_page, ['*'], 'page', $page);
+        //$services = Service::paginate($per_page, ['*'], 'page', $page);
+        $services = Service::orderBy('status')->orderBy('active')->get();
         return new ServiceCollection($services);
     }
 
