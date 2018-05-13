@@ -19,14 +19,14 @@ class CreateServicesTable extends Migration
             $table->integer('host_id');
             $table->integer('probe_id');
             $table->integer('port')->nullable();
-            $table->string('uri', 128)->nullable();            
+            $table->string('uri', 128)->nullable();
             $table->boolean('active')->default(true);
             $table->boolean('status')->default(false);
             $table->timestamp('status_change')->nullable();
             $table->timestamp('last_status_down')->nullable();
             $table->timestamp('last_status_up')->nullable();
-            $table->string('username', 64)->nullable();
-            $table->string('password', 64)->nullable();
+            $table->string('user', 64)->nullable();
+            $table->string('pass', 64)->nullable();
 
             $table->timestamps();
         });

@@ -33,7 +33,12 @@ $router->group(['prefix' => 'api'], function() use ($router) {
 
 	// Services API
 	$router->get('services', 'ServicesController@index');	
+	$router->get('service/{id}', 'ServicesController@show');
+	$router->post('service', 'ServicesController@store');
+	$router->put('service', 'ServicesController@update');
+	$router->delete('service/{id}', 'ServicesController@destroy');
 	$router->get('service-stats', 'ServicesController@serviceStats');
+	$router->get('service/{id}/observations', 'ServicesController@getObservations');
 
 	// Hosts API
 	$router->get('hosts', 'HostsController@index');	
@@ -42,12 +47,13 @@ $router->group(['prefix' => 'api'], function() use ($router) {
 	$router->put('host', 'HostsController@update');	
 	$router->delete('host/{id}', 'HostsController@destroy');
 	$router->get('host-stats', 'HostsController@hostStats');	
-
-	// Pings API
 	$router->get('host/{id}/pings', 'HostsController@getPings');
+
 
 	// Flapping API
 	$router->get('flappings', 'FlappingsController@index');	
 
+	// Probes API
+	$router->get('probes', 'ProbesController@index');	
 
 });
