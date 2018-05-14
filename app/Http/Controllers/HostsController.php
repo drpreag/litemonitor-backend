@@ -26,7 +26,7 @@ class HostsController extends Controller
         //$per_page = intval ($request->input('per_page', 15));
         //$hosts = Host::paginate($per_page, ['*'], 'page', $page);
 
-        $hosts = Host::orderBy('icmp_status')->orderBy('icmp_probe')->get();
+        $hosts = Host::orderBy('icmp_probe', 'desc')->orderBy('icmp_status')->get();
         return new HostCollection($hosts);
     }
 
