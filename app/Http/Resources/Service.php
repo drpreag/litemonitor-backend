@@ -31,6 +31,7 @@ class Service extends Resource
             'active' => $this->active,
             'status' => $this->status,
 
+            'status_change' => $this->status_change,
             'last_status_down' => $this->last_status_down,
             'last_status_up' => $this->last_status_up,
 
