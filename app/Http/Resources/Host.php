@@ -19,9 +19,10 @@ class Host extends Resource
         return [
             'id' => $this->id,
             'name' => $this->name,
-
             'description' => $this->description,
+            
             'fqdn' => $this->fqdn,
+            'ip' => gethostbyname($this->fqdn),     //derrived
 
             'icmp_probe' => $this->icmp_probe, 
             'icmp_status' => $this->icmp_status,

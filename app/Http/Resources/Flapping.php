@@ -3,9 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\Resource;
-//use App\Flapping;
-//use App\Service;
-//use App\Host;
+use Carbon\Carbon as Carbon;
 
 class Flapping extends Resource
 {
@@ -17,11 +15,10 @@ class Flapping extends Resource
      */
     public function toArray($request)
     {
-        //return parent::toArray($request);
         return [
             'id' => $this->id,
             'host_id' => $this->host_id,
-            'host_name' => $this->hasHost->name,
+            'host_name' => $this->hasHost->name,    // derived
             'service_id' => $this->service_id,
             'service_name' => ($this->service_id) ? $this->hasService->name : '',    // derived
             'comment' => $this->comment,
