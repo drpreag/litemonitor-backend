@@ -84,6 +84,8 @@ $app->middleware([
 // $app->register(App\Providers\EventServiceProvider::class);
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 $app->register(Barryvdh\Cors\LumenServiceProvider::class);
+//$app->register(Illuminate\Notifications\NotificationServiceProvider::class);
+$app->register(\Illuminate\Redis\RedisServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------

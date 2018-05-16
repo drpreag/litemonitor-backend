@@ -67,7 +67,7 @@ class Service extends Model
                 $this->status = false;
                 $this->save(); 
                 Log::info ("$this->host_id Down, status changed, id=$this->id");
-                Flapping::info ($this->host_id, $this->id, "Down by probe" . $this->hasProbe->name, false);
+                Flapping::info ($this->host_id, $this->id, "Down by probe " . $this->hasProbe->name, false);
             } 
             if ($old->status == false and $new->status == true) {
                 // flaping from Down to Up                

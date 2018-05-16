@@ -23,7 +23,7 @@ class ServicesController extends Controller
         //$per_page = intval ($request->input('per_page', 15));
         //$services = Service::paginate($per_page, ['*'], 'page', $page);
 
-        $services = Service::orderBy('active')->orderBy('status')->orderby('status_change', 'desc')->get();
+        $services = Service::orderBy('active','desc')->orderBy('status')->orderby('status_change', 'desc')->get();
 
         return new ServiceCollection($services);
     }
