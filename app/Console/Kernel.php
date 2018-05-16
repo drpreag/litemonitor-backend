@@ -3,12 +3,13 @@
 namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
-use Laravel\Lumen\Console\Kernel as ConsoleKernel;
+use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Host;
 use App\Service;
 use App\Observation;
 use App\Ping;
-use App\Carbon;
+use App\Probe;
+use Carbon\Carbon as Carbon;
 
 class Kernel extends ConsoleKernel
 {
@@ -35,10 +36,10 @@ class Kernel extends ConsoleKernel
                 foreach ($hosts as $host) {
                     $ping = new Ping;
                     $ping->pingMultipleTimes($host);
-                    $ping->detectPingFlapping($host);
+                    $ping->detectPingFlaping($host);
                 }
             }
-        )->everyMinute();
+        )->name('ping')->withoutOverlapping()->everyMinute();
 
         $schedule->call (
             function() {
@@ -47,11 +48,11 @@ class Kernel extends ConsoleKernel
                     if ($service->hasProbe->http_probe or $service->hasProbe->https_probe) {                    
                         $observation = new Observation;
                         $observation->curlProbe($service);
-                        $service->detectProbeFlapping();
+                        $service->detectProbeFlaping();
                     }
                 }
             }
-        )->everyMinute();
+        )->name('curl')->withoutOverlapping()->everyMinute();
 
         $schedule->call (
             function() {
@@ -60,11 +61,11 @@ class Kernel extends ConsoleKernel
                     if ($service->hasProbe->socket_probe) {
                         $observation = new Observation;
                         $observation->socketProbe($service);
-                        $service->detectProbeFlapping();
+                        $service->detectProbeFlaping();
                     }
                 }
             }
-        )->everyMinute();
+        )->name('other')->withoutOverlapping()->everyMinute();
 
         $schedule->call (
             function() {
@@ -73,7 +74,7 @@ class Kernel extends ConsoleKernel
                     if ($service->hasProbe->mysql_probe) {
                         $observation = new Observation;
                         $observation->mysqlProbe($service);
-                        $service->detectProbeFlapping();
+                        $service->detectProbeFlaping();
                     }
                 }
             }
@@ -86,7 +87,7 @@ class Kernel extends ConsoleKernel
                     if ($service->hasProbe->ssl_probe) {
                         $observation = new Observation;
                         $observation->sslProbe($service);
-                        $service->detectProbeFlapping();
+                        $service->detectProbeFlaping();
                     }
                 }
             }
@@ -99,5 +100,17 @@ class Kernel extends ConsoleKernel
                 $observation = Observation::where('created_at','<',Carbon::now()->subDays(2)->toDateTimeString())->delete();
             }
         )->daily();
+    }
+
+    /**
+     * Register the commands for the application.
+     *
+     * @return void
+     */
+    protected function commands()
+    {
+        $this->load(__DIR__.'/Commands');
+
+        require base_path('routes/console.php');
     }
 }
