@@ -5,8 +5,8 @@ namespace App;
 use Illuminate\Foundation\Application;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
-//use App\Host;
-//use App\Service;
+use App\Host;
+use App\Service;
 
 class Flapping extends Model
 {
@@ -40,6 +40,7 @@ class Flapping extends Model
         $flapping->comment = $comment;
         $flapping->status = $status;
         $flapping->save();
+
         return $flapping;
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Flapping;
 use App\Http\Resources\Flapping as FlappingResource;
 use App\Http\Resources\FlappingCollection;
@@ -23,4 +24,35 @@ class FlappingsController extends Controller
         $flappings = Flapping::orderby('id','desc')->get()->take(10);
         return new FlappingCollection($flappings);
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getLast()
+    {
+        $flapping = Flapping::orderby('id','desc')->get()->take(1);
+        if ($flapping)
+            return new FlappingResource($flapping[0]);
+    }    
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id     
+     * @return \Illuminate\Http\Response
+     */
+    public function getNext($id)
+    {
+        $flapping = Flapping::Find($id+1);
+       
+        if ($flapping)
+            return new FlappingResource($flapping);
+        else 
+            return \Response::json([
+                'Not found'
+            ], 404);
+    }    
+
 }

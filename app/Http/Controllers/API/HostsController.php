@@ -69,8 +69,6 @@ class HostsController extends Controller
         $host->fqdn = $request->fqdn;            
         $host->icmp_probe = $request->icmp_probe ? true : false;
         $host->icmp_status = false;        
-        $host->status_change = 
-        $host->last_status_down = 
         $host->last_status_up = Carbon::now();
 
         $host->save();
@@ -90,6 +88,7 @@ class HostsController extends Controller
         $this->validate(
             $request,
             array(
+                'id'            => 'required|integer',
                 'name'          => 'required|max:64|unique:hosts,name,'.$request->id,
                 'description'   => 'max:255',
                 'fqdn'          => 'required|max:255|unique:hosts,fqdn,'.$request->id,

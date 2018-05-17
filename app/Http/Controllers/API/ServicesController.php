@@ -52,6 +52,7 @@ class ServicesController extends Controller
         $this->validate(
             $request,
             array(
+                'id'            => 'required|integer',
                 'name'          => 'required|max:64',
                 'host_id'       => 'required|integer',
                 'probe_id'      => 'required|integer',
@@ -90,6 +91,7 @@ class ServicesController extends Controller
         $this->validate(
             $request,
             array(
+                'id'            => 'required|integer',                
                 'name'          => 'required|max:64',
                 'host_id'       => 'required|integer',
                 'probe_id'      => 'required|integer',
@@ -107,14 +109,14 @@ class ServicesController extends Controller
         $service->name = $request->name;
         $service->host_id = $request->host_id;
         $service->probe_id = $request->probe_id;
-        if ($request->input('port'))
+        //if ($request->input('port'))
             $service->port = $request->port;
-        if ($request->input('uri'))        
+        //if ($request->input('uri'))        
             $service->uri = $request->uri;
         $service->active = $request->active === 1  ? true : false;
-        if ($request->input('user'))
+        //if ($request->input('user'))
             $service->user = $request->user;
-        if ($request->input('pass'))
+        //if ($request->input('pass'))
             $service->pass = $request->pass;
         
         $service->save();

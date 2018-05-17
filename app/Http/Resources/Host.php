@@ -15,14 +15,17 @@ class Host extends Resource
      */
     public function toArray($request)
     {
-//        return parent::toArray($request);
+        $ip = gethostbyname($this->fqdn);
+        if (! filter_var($ip, FILTER_VALIDATE_IP))
+            $ip = null;
+
         return [
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
             
             'fqdn' => $this->fqdn,
-            'ip' => gethostbyname($this->fqdn),     //derrived
+            'ip' => $ip,
 
             'icmp_probe' => $this->icmp_probe, 
             'icmp_status' => $this->icmp_status,

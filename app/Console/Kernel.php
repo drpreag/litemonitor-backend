@@ -10,6 +10,7 @@ use App\Observation;
 use App\Ping;
 use App\Probe;
 use Carbon\Carbon as Carbon;
+use Illuminate\Support\Facades\Log;
 
 class Kernel extends ConsoleKernel
 {
@@ -36,7 +37,7 @@ class Kernel extends ConsoleKernel
                 foreach ($hosts as $host) {
                     $ping = new Ping;
                     $ping->pingMultipleTimes($host);
-                    $ping->detectPingFlaping($host);
+                    $ping->detectPingFlapping($host);
                 }
             }
         )->name('ping')->withoutOverlapping()->everyMinute();
@@ -48,7 +49,7 @@ class Kernel extends ConsoleKernel
                     if ($service->hasProbe->http_probe or $service->hasProbe->https_probe) {                    
                         $observation = new Observation;
                         $observation->curlProbe($service);
-                        $service->detectProbeFlaping();
+                        $service->detectProbeFlapping();
                     }
                 }
             }
@@ -61,7 +62,7 @@ class Kernel extends ConsoleKernel
                     if ($service->hasProbe->socket_probe) {
                         $observation = new Observation;
                         $observation->socketProbe($service);
-                        $service->detectProbeFlaping();
+                        $service->detectProbeFlapping();
                     }
                 }
             }
@@ -74,7 +75,7 @@ class Kernel extends ConsoleKernel
                     if ($service->hasProbe->mysql_probe) {
                         $observation = new Observation;
                         $observation->mysqlProbe($service);
-                        $service->detectProbeFlaping();
+                        $service->detectProbeFlapping();
                     }
                 }
             }
@@ -87,7 +88,7 @@ class Kernel extends ConsoleKernel
                     if ($service->hasProbe->ssl_probe) {
                         $observation = new Observation;
                         $observation->sslProbe($service);
-                        $service->detectProbeFlaping();
+                        $service->detectProbeFlapping();
                     }
                 }
             }
