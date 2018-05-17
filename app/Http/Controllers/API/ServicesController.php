@@ -52,7 +52,6 @@ class ServicesController extends Controller
         $this->validate(
             $request,
             array(
-                'id'            => 'required|integer',
                 'name'          => 'required|max:64',
                 'host_id'       => 'required|integer',
                 'probe_id'      => 'required|integer',
