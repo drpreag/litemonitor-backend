@@ -3,15 +3,27 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Host;
-use App\Probe;
-use App\Observation;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Notifications\Notification;
+use App\Notifications\ServiceDown;
+use App\Notifications\ServiceUp;
 use Illuminate\Support\Facades\Log;
 use App\Flapping;
 use Carbon\Carbon;
+use App\Ping;
+use App\Host;
+use App\Probe;
+use App\Observation;
 
 class Service extends Model
 {
+    use Notifiable;
+
+    public function routeNotificationForSlack()
+    {
+        return env('SLACK_API');
+    }
+    
     /**
      * Relation
      *
@@ -68,6 +80,7 @@ class Service extends Model
                 $this->save(); 
                 Log::info ("$this->host_id Down, status changed, id=$this->id");
                 Flapping::info ($this->host_id, $this->id, "Down by probe " . $this->hasProbe->name, false);
+                $this->notify(new ServiceDown); // send Slack notification
             } 
             if ($old->status == false and $new->status == true) {
                 // flaping from Down to Up                
@@ -77,6 +90,7 @@ class Service extends Model
                 $this->save();
                 Log::info ("$this->host_id Up, status changed id=$this->id");
                 Flapping::info ($this->host_id, $this->id, "Up by probe ". $this->hasProbe->name, true);
+                $this->notify(new ServiceUp); // send Slack notification                
             }
             if ($this->status == false and $new->status == true) {
                 Log::info ("$this->host_id Probe Up, status fixed id= $this->id");

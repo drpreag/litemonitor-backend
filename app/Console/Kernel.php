@@ -35,9 +35,8 @@ class Kernel extends ConsoleKernel
             function() {
                 $hosts = Host::where('icmp_probe', true)->get();
                 foreach ($hosts as $host) {
-                    $ping = new Ping;
-                    $ping->pingMultipleTimes($host);
-                    $ping->detectPingFlapping($host);
+                    $host->ping();
+                    $host->detectPingFlapping();
                 }
             }
         )->name('ping')->withoutOverlapping()->everyMinute();
