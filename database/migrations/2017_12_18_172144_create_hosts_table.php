@@ -18,11 +18,7 @@ class CreateHostsTable extends Migration
             $table->string('name', 64);
             $table->string('description', 255);
             $table->string('fqdn', 255);
-            $table->boolean('icmp_probe')->default(true);
-            $table->boolean('icmp_status')->default(false);
-            $table->timestamp('status_change')->useCurrent();
-            $table->timestamp('last_status_down')->useCurrent();
-            $table->timestamp('last_status_up')->useCurrent();
+            $table->boolean('active')->default(true);
             
             $table->timestamps();
         });

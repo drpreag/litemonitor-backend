@@ -49,10 +49,9 @@ class FlappingsController extends Controller
        
         if ($flapping)
             return new FlappingResource($flapping);
-        else 
-            return \Response::json([
-                'Not found'
-            ], 404);
+        return \Response::json([
+           'Not found'
+        ], 404);
     }    
 
 }

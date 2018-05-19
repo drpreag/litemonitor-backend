@@ -16,7 +16,7 @@ class CreateFlappingsTable extends Migration
         Schema::create('flappings', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('host_id');
-            $table->integer('service_id')->nullable();
+            $table->integer('service_id');
             $table->string('comment', 128)->nullable();
             $table->boolean('status')->default(false);  
 

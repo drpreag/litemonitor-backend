@@ -38,6 +38,8 @@ class Service extends Resource
             'username' => $this->username,
             'password' => $this->password,
 
+            'draw_graph' => $this->hasProbe->draw_graph,  // derived
+
             'created_at' => $this->created_at->toDateTimeString(),
             'updated_at' => $this->updated_at->toDateTimeString(),
         ];

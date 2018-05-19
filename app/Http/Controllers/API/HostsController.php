@@ -7,9 +7,6 @@ use Illuminate\Http\Request;
 use App\Host;
 use App\Http\Resources\Host as HostResource;
 use App\Http\Resources\HostCollection;
-use App\Ping;
-use App\Http\Resources\Ping as PingResource;
-use App\Http\Resources\PingCollection;
 
 use Carbon\Carbon as Carbon;
 use Illuminate\Support\Facades\Log;
@@ -27,7 +24,7 @@ class HostsController extends Controller
         //$per_page = intval ($request->input('per_page', 15));
         //$hosts = Host::paginate($per_page, ['*'], 'page', $page);
 
-        $hosts = Host::orderBy('icmp_probe', 'desc')->orderBy('status_change', 'desc')->get();
+        $hosts = Host::orderBy('active', 'desc')->get();
         return new HostCollection($hosts);
     }
 
@@ -58,7 +55,7 @@ class HostsController extends Controller
                 'name'          => 'required|unique:hosts|max:64',
                 'description'   => 'max:255',
                 'fqdn'          => 'required|unique:hosts|max:255',
-                'icmp_probe'    => 'required|integer|min:0|max:1'
+                'active'    => 'required|integer|min:0|max:1'
             )
         );
         
@@ -67,8 +64,7 @@ class HostsController extends Controller
         $host->name = $request->name;
         $host->description = $request->description;
         $host->fqdn = $request->fqdn;            
-        $host->icmp_probe = $request->icmp_probe ? true : false;
-        $host->icmp_status = false;        
+        $host->active = $request->active ? true : false;
         $host->last_status_up = Carbon::now();
 
         $host->save();
@@ -92,7 +88,7 @@ class HostsController extends Controller
                 'name'          => 'required|max:64|unique:hosts,name,'.$request->id,
                 'description'   => 'max:255',
                 'fqdn'          => 'required|max:255|unique:hosts,fqdn,'.$request->id,
-                'icmp_probe'    => 'required|integer|min:0|max:1'
+                'active'        => 'required|integer|min:0|max:1'
             )
         );
 
@@ -102,7 +98,7 @@ class HostsController extends Controller
         $host->name = $request->name;
         $host->description = $request->description;
         $host->fqdn = $request->fqdn;            
-        $host->icmp_probe = $request->icmp_probe ? true : false;
+        $host->active = $request->active ? true : false;
 
         $host->save();
     
@@ -134,21 +130,27 @@ class HostsController extends Controller
     {
         $stats=array();
 
-        $stats['up'] = Host::where('icmp_probe',1)->where('icmp_status',1)->get()->count();
-        $stats['down'] = Host::where('icmp_probe',1)->where('icmp_status',0)->get()->count();
-        $stats['non_monitored'] = Host::where('icmp_probe',0)->get()->count();
+        $stats['monitored'] = Host::where('active',1)->get()->count();
+        $stats['non_monitored'] = Host::where('active',0)->get()->count();
 
         return json_encode($stats);
-    }    
+    }  
 
     /**
-     * Display a listing of the resource.
+     * Display the specified resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return json array 
      */
-    public function getPings($id)
+    public function hostServices($id)
     {
-        $pings = Ping::where('host_id',$id)->orderby('id', 'desc')->take(60)->get();
-        return new PingCollection($pings);
-    }    
+        if (! is_numeric($id)) 
+            $services = Services::where('host_id',$id)->get();
+            if ($services)            
+                return new ServiceCollection($services);
+
+        return \Response::json([
+            'Not found'
+        ], 404);            
+
+    } 
 }

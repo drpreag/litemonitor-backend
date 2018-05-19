@@ -11,9 +11,6 @@ use Spatie\SslCertificate\SslCertificate;
 
 class Observation extends Model
 {
-
-	//public $timestamps = false;
-
     /**
      * Relation
      *
@@ -22,6 +19,79 @@ class Observation extends Model
     public function hasService()
     {
         return $this->belongsTo('App\Service', 'service_id', 'id');
+    }
+
+    /**
+     * Count one ping response time to host
+     *
+     * @return float time in miliseconds, or -1 if ping failed
+     */	
+	private function pingOnce (string $host) {
+
+	    $startTime = microtime(true);
+	    $ping = exec('ping -c 1 ' . $host);
+	    $stopTime  = microtime(true);
+
+		$elapsedTime = (($stopTime - $startTime) *1000);
+
+	    if (strpos ($ping, "min/avg/max")!==false)
+	    	return $elapsedTime;
+	    else 
+	    	return -1;
+	}
+
+    /**
+     * Count AVG ping for 5 probes
+     *
+     * saves new record to table
+     * @return -1 site down, 0 failed at least one pings, >0 ping avg speed
+     */ 
+    public function pingProbe(Service $service)
+    {
+        $testNumber = env('PING_COUNT', 5);
+        $host = Host::findOrFail($service->host_id);
+        
+        $status = true;
+        $totalTime = 0.0;
+        $failedTests = 0;
+
+        for ($i=0; $i<$testNumber; $i++) {
+
+            $result = $this->pingOnce ($host->fqdn);
+
+            if ($result >= 0)
+                $totalTime = $totalTime + $result;
+            else {
+                $failedTests++;
+                sleep(0.5);
+            }
+        }
+
+        $this->service_id = $service->id;     
+        if ($failedTests == $testNumber) {
+            $this->status = false;
+            $this->result = "All pings failed";
+            $this->speed = null;
+        } else {
+        	if ($failedTests > 1) {
+	        	$this->speed = round ($totalTime / ($testNumber-$failedTests), 2);
+            	$this->status = false;
+            	$this->result = "$failedTests of $testNumber pings failed";         
+            } else {
+	        	$this->speed = round ($totalTime / ($testNumber-$failedTests), 2);
+            	$this->status = true;
+            	$this->result = "OK";         
+            }
+        }
+        $this->save();
+        
+        if ($failedTests == 0)
+            return round ($totalTime / $testNumber, 2);
+        else
+            if ($failedTests == $testNumber) 
+                return -1;
+            else
+                return 0;
     }
 
 	function socketProbe (Service &$service)

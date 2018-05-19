@@ -27,12 +27,11 @@ class Host extends Resource
             'fqdn' => $this->fqdn,
             'ip' => $ip,
 
-            'icmp_probe' => $this->icmp_probe, 
-            'icmp_status' => $this->icmp_status,
+            'active' => $this->active, 
 
-            'status_change' => $this->status_change,
-            'last_status_down' => $this->last_status_down,
-            'last_status_up' => $this->last_status_up,
+            // 'status_change' => $this->status_change,
+            // 'last_status_down' => $this->last_status_down,
+            // 'last_status_up' => $this->last_status_up,
 
             //'created_at' => $this->created_at,
             'created_at' => $this->created_at->toDateTimeString(),

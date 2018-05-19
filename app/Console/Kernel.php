@@ -7,7 +7,7 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Host;
 use App\Service;
 use App\Observation;
-use App\Ping;
+//use App\Ping;
 use App\Probe;
 use Carbon\Carbon as Carbon;
 use Illuminate\Support\Facades\Log;
@@ -33,13 +33,17 @@ class Kernel extends ConsoleKernel
     {
         $schedule->call (
             function() {
-                $hosts = Host::where('icmp_probe', true)->get();
-                foreach ($hosts as $host) {
-                    $host->ping();
-                    $host->detectPingFlapping();
+                $services = Service::where('active', true)->get();             // ping probes
+                foreach ($services as $service) {
+                    if ($service->hasProbe->ping_probe) {
+                        $observation = new Observation;
+                        $observation->pingProbe($service);
+                        $service->detectProbeFlapping();
+                    }
                 }
             }
         )->name('ping')->withoutOverlapping()->everyMinute();
+
 
         $schedule->call (
             function() {
