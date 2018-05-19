@@ -52,7 +52,7 @@ Route::group(['middleware' => 'api', 'prefix' => '', 'as' => 'api.'], function()
 	Route::delete('host/{id}', 'API\HostsController@destroy')->name('host');
 
 	Route::get('host-stats', 'API\HostsController@hostStats')->name('hoststats');
-	Route::get('host/{id}/services', 'API\HostsController@getServices')->name('hostservices');	
+	Route::get('host/{id}/services', 'API\HostsController@hostServices')->name('hostservices');	
 
 	// Flapping API
 	Route::get('flappings', 'API\FlappingsController@index')->name('flappings');

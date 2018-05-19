@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Host;
 use App\Http\Resources\Host as HostResource;
 use App\Http\Resources\HostCollection;
+use App\Service;
+use App\Http\Resources\Service as ServiceResource;
+use App\Http\Resources\ServiceCollection;
 
 use Carbon\Carbon as Carbon;
 use Illuminate\Support\Facades\Log;
@@ -143,14 +146,12 @@ class HostsController extends Controller
      */
     public function hostServices($id)
     {
-        if (! is_numeric($id)) 
-            $services = Services::where('host_id',$id)->get();
-            if ($services)            
+        if (is_numeric($id)) {
+            $services = Service::where('host_id',$id)->get();
+
+            if ($services->count() > 0)            
                 return new ServiceCollection($services);
-
-        return \Response::json([
-            'Not found'
-        ], 404);            
-
+        }
+        return null;
     } 
 }
