@@ -22,7 +22,7 @@ class Service extends Resource
             'name' => $this->name,
 
             'host_id' => $this->host_id,
-            'host_name' => $this->hasHost->name,    // derived
+            'host_name' => $this->host->name,    // derived
             'probe_id' => $this->probe_id,
             'probe_name' => $this->hasProbe->name,  // derived
             'port' => $this->port,

@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\Resource;
 use Carbon\Carbon as Carbon;
-//use App\Service;
+use App\Service;
 
 class Flapping extends Resource
 {
@@ -19,9 +19,9 @@ class Flapping extends Resource
         return [
             'id' => $this->id,
             'host_id' => $this->host_id,
-            'host_name' => $this->hasHost->name,    // derived
+            'host_name' => $this->host->name,    // derived
             'service_id' => $this->service_id,
-            'service_name' => ($this->service_id !== null) ? $this->hasService->name : '',    // derived
+            'service_name' => $this->service->name,    // derived
             'comment' => $this->comment,
             'status' => $this->status,
             'created_at' => $this->created_at->toDateTimeString()

@@ -39,7 +39,7 @@ class Service extends Model
      *
      * @return App\Host
      */
-    public function hasHost()
+    public function host()
     {
         return $this->belongsTo('App\Host', 'host_id', 'id');
     } 
@@ -52,6 +52,16 @@ class Service extends Model
     public function hasObservations()
     {
         return $this->hasMeny('App\Observation', 'service_id');
+    }
+
+    /**
+     * Relation
+     *
+     * @return App\Observation
+     */
+    public function hasFlappings()
+    {
+        return $this->hasMeny('App\Flapping', 'id', 'service_id');
     }
 
     /**

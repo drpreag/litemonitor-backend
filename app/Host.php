@@ -12,7 +12,7 @@ class Host extends Model
      *
      * @return App\Service
      */
-    public function hasServices()
+    public function hasService()
     {
         return $this->hasMany('App\Service', 'service_id');
     }

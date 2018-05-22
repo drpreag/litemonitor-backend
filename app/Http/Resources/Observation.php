@@ -17,11 +17,11 @@ class Observation extends Resource
         return [
             'id' => $this->id,            
             'service_id' => $this->service_id,
-            //'probe_name' => $this->hasService->hasProbe->name,    // derived
+            'probe_name' => $this->service->hasProbe->name,    // derived
             'status' => $this->status,
             'speed' => $this->speed,
             'result' => $this->result,
-            'created_at' => $this->created_at->toDateTimeString()
+            'created_at' => $this->created_at->toTimeString()
         ];
     }
 }

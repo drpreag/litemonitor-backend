@@ -17,7 +17,7 @@ class Flapping extends Model
      *
      * @return App\Host
      */
-    public function hasHost()
+    public function host()
     {
         return $this->belongsTo('App\Host', 'host_id', 'id');
     }
@@ -27,7 +27,7 @@ class Flapping extends Model
      *
      * @return App\Service
      */
-    public function hasService()
+    public function service()
     {
         return $this->belongsTo('App\Service', 'service_id', 'id');
     }

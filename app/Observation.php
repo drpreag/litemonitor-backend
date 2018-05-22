@@ -16,7 +16,7 @@ class Observation extends Model
      *
      * @return App\Service
      */
-    public function hasService()
+    public function service()
     {
         return $this->belongsTo('App\Service', 'service_id', 'id');
     }
@@ -104,7 +104,7 @@ class Observation extends Model
 	    $starttime = microtime(true);
 	   	$status    = false;
 
-	    $file      = @fsockopen ($service->hasHost->fqdn, $service->port, $errno, $errstr, 10);
+	    $file      = @fsockopen ($service->host->fqdn, $service->port, $errno, $errstr, 10);
 		$stoptime  = microtime(true);	    
 
 		if (is_resource($file)) 
@@ -128,14 +128,14 @@ class Observation extends Model
 	   	$starttime = microtime(true);
 
 	   	if ($service->hasProbe->http_probe) {
-			$url="http://" . $service->hasHost->fqdn . $service->uri;
+			$url="http://" . $service->host->fqdn . $service->uri;
 			if (isset($service->port))		
 				$port = $service->port;				
 			else
 				$port = 80;		
 	   	}
   		if ($service->hasProbe->https_probe) {
-			$url="https://" . $service->hasHost->fqdn . $service->uri;
+			$url="https://" . $service->host->fqdn . $service->uri;
 			if (isset($service->port))		
 				$port = $service->port;				
 			else				
@@ -179,7 +179,7 @@ class Observation extends Model
 			return;
 
 		$starttime = microtime(true);
-		$conn = new \mysqli($service->hasHost->fqdn .':'. $service->port, $service->username, $service->password, 'information_schema');
+		$conn = new \mysqli($service->host->fqdn .':'. $service->port, $service->username, $service->password, 'information_schema');
 	    $stoptime  = microtime(true);	
 
 		$this->service_id = $service->id;
@@ -202,7 +202,7 @@ class Observation extends Model
 		if (! $service->hasProbe->ssl_probe)
 			return;
 		try {
-			$certificate = SslCertificate::createForHostName($service->hasHost->fqdn);
+			$certificate = SslCertificate::createForHostName($service->host->fqdn);
 
 			$this->service_id = $service->id;
 			if ($certificate->isValid()) 
