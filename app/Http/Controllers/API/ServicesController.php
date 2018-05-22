@@ -10,6 +10,7 @@ use App\Http\Resources\ServiceCollection;
 use App\Observation;
 use App\Http\Resources\Observation as ObservationResource;
 use App\Http\Resources\ObservationCollection;
+use Carbon\Carbon as Carbon;
 
 class ServicesController extends Controller
 {
@@ -73,6 +74,7 @@ class ServicesController extends Controller
         $service->active = $request->active === 1  ? true : false;
         $service->user = $request->user;
         $service->pass = $request->pass;
+        $service->status_change = Carbon::now();
         
         $service->save();
 

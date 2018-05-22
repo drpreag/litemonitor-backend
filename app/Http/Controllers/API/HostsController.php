@@ -58,7 +58,7 @@ class HostsController extends Controller
                 'name'          => 'required|unique:hosts|max:64',
                 'description'   => 'max:255',
                 'fqdn'          => 'required|unique:hosts|max:255',
-                'active'    => 'required|integer|min:0|max:1'
+                'active'        => 'required|integer|min:0|max:1'
             )
         );
         
@@ -67,8 +67,7 @@ class HostsController extends Controller
         $host->name = $request->name;
         $host->description = $request->description;
         $host->fqdn = $request->fqdn;            
-        $host->active = $request->active ? true : false;
-        $host->last_status_up = Carbon::now();
+        $host->active = $request->active === 1 ? true : false;
 
         $host->save();
 
@@ -101,7 +100,7 @@ class HostsController extends Controller
         $host->name = $request->name;
         $host->description = $request->description;
         $host->fqdn = $request->fqdn;            
-        $host->active = $request->active ? true : false;
+        $host->active = $request->active === 1 ? true : false;        
 
         $host->save();
     
