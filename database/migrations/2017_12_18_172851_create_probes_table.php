@@ -16,6 +16,7 @@ class CreateProbesTable extends Migration
         Schema::create('probes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 64);
+            $table->boolean('ping_probe')->default(false);            
             $table->boolean('http_probe')->default(false);
             $table->boolean('https_probe')->default(false);
             $table->boolean('socket_probe')->default(false);
