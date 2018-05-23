@@ -8,6 +8,7 @@ use App\Host;
 use App\Service;
 use Carbon\Carbon;
 use Spatie\SslCertificate\SslCertificate;
+//use Illuminate\Support\Facades\Log;
 
 class Observation extends Model
 {
@@ -103,6 +104,7 @@ class Observation extends Model
 
 	    $starttime = microtime(true);
 	   	$status    = false;
+	   	$resut = false;
 
 	    $file      = @fsockopen ($service->host->fqdn, $service->port, $errno, $errstr, 10);
 		$stoptime  = microtime(true);	    
@@ -110,16 +112,59 @@ class Observation extends Model
 		if (is_resource($file)) 
 		    if ($file) {
 		        fclose($file);
+		        $result = "OK";
 	    		$status = true;
 		    }
 
 		$this->service_id = $service->id;
 		$this->status = $status;
+		$this->result = $result;
 		$this->speed = round (($stoptime - $starttime) * 1000, 3);
 		$this->save();
 
 	    return $status;
 	}
+
+	function sshProbe (Service &$service)
+	{
+		set_time_limit(0);
+
+		if (! $service->hasProbe->ssh_probe)		
+			return false;
+
+        $ssh_host = $service->host->fqdn;
+	    $ssh_port = $service->port; 
+	    $ssh_auth_user = $service->user; 
+	    $ssh_auth_pass = $service->pass; 
+	    $connection = null; 
+
+	    $starttime = microtime(true);
+	   	$status    = false;
+	   	$result = "Not OK";
+
+		try {
+			if ($connection = ssh2_connect($ssh_host, $ssh_port)) { 
+		        if (ssh2_auth_password($connection, $ssh_auth_user, $ssh_auth_pass)) { 	
+					$result = "OK";
+	    			$status = true;
+		        	ssh2_exec($connection, 'echo "EXITING" && exit;'); 
+		        	ssh2_disconnect ($connection);
+	        	} else {
+	    			$result = "Not OK - invalid username/password";
+	        	}
+	        }
+    	} catch (Exception $e) {
+		   	$result = "Not OK - " . $e->getMessage();
+    	} finally {
+			$stoptime  = microtime(true);    		
+			$this->service_id = $service->id;
+			$this->status = $status;
+			$this->result = $result;
+			$this->speed = round (($stoptime - $starttime) * 1000, 3);
+			$this->save();
+			return $status;
+		}
+	}	
 
 	function curlProbe (Service $service)
 	{   

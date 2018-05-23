@@ -60,16 +60,16 @@ class Kernel extends ConsoleKernel
 
         $schedule->call (
             function() {
-                $services = Service::where('active', true)->get();             // socket probes
+                $services = Service::where('active', true)->get();             // ssh probes
                 foreach ($services as $service) {
-                    if ($service->hasProbe->socket_probe) {
+                    if ($service->hasProbe->ssh_probe) {
                         $observation = new Observation;
-                        $observation->socketProbe($service);
+                        $observation->sshProbe($service);
                         $service->detectProbeFlapping();
                     }
                 }
             }
-        )->name('other')->withoutOverlapping()->everyMinute();
+        )->name('ssh')->withoutOverlapping()->everyMinute();
 
         $schedule->call (
             function() {

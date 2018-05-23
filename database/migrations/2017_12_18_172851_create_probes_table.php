@@ -19,7 +19,7 @@ class CreateProbesTable extends Migration
             $table->boolean('ping_probe')->default(false);            
             $table->boolean('http_probe')->default(false);
             $table->boolean('https_probe')->default(false);
-            $table->boolean('socket_probe')->default(false);
+            $table->boolean('ssh_probe')->default(false);
             $table->boolean('ssl_probe')->default(false);
             $table->boolean('mysql_probe')->default(false);
             $table->boolean('draw_graph')->default(false);
