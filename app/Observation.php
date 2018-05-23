@@ -72,7 +72,7 @@ class Observation extends Model
         if ($failedTests == $testNumber) {
             $this->status = false;
             $this->result = "All pings failed";
-            $this->speed = null;
+            $this->speed = 0.00;
         } else {
         	if ($failedTests > 1) {
 	        	$this->speed = round ($totalTime / ($testNumber-$failedTests), 2);
@@ -160,7 +160,10 @@ class Observation extends Model
 			$this->service_id = $service->id;
 			$this->status = $status;
 			$this->result = $result;
-			$this->speed = round (($stoptime - $starttime) * 1000, 3);
+			if ($status == true)
+				$this->speed = round (($stoptime - $starttime) * 1000, 3);
+			else 
+				$this->speed = 0.00;
 			$this->save();
 			return $status;
 		}
@@ -209,7 +212,10 @@ class Observation extends Model
 
 		$this->service_id = $service->id;
 		$this->status = $status;
-		$this->speed = round (($stoptime - $starttime) * 1000, 3);
+		if ($status == true)
+			$this->speed = round (($stoptime - $starttime) * 1000, 3);
+		else 
+			$this->speed = 0.00;
 		$this->result = substr ($result, 0, 127);
 		$this->save();
 
@@ -233,7 +239,10 @@ class Observation extends Model
 		else
 			$this->status = true;		
 		$this->result = $conn->connect_errno;	// ne prikazuje errno kako treba, popraviti
-		$this->speed = round (($stoptime - $starttime) * 1000, 3);
+		if ($this->status == true)
+			$this->speed = round (($stoptime - $starttime) * 1000, 3);
+		else 
+			$this->speed = 0.00;		
 		$this->save();	    
 
 		if (!$conn) {
