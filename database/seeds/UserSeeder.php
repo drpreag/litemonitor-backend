@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Auth;
 use App\User;
 use Carbon\Carbon as Carbon;
 

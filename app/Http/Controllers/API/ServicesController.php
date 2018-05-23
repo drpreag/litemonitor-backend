@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Http\Request;
 use App\Service;
 use App\Http\Resources\Service as ServiceResource;
 use App\Http\Resources\ServiceCollection;
 use App\Observation;
-use App\Http\Resources\Observation as ObservationResource;
 use App\Http\Resources\ObservationCollection;
 use Carbon\Carbon as Carbon;
 
@@ -128,7 +128,7 @@ class ServicesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @return json array 
+     * @return Jsonable array 
      */
     public function serviceStats()
     {
@@ -148,7 +148,7 @@ class ServicesController extends Controller
      */
     public function getObservations($id)
     {
-        $observations = Observation::where('service_id',$id)->orderby('id', 'desc')->take(30)->get();
+        $observations = Observation::where('service_id',$id)->orderby('id', 'desc')->take(60)->get();
         return new ObservationCollection($observations);
     }
 

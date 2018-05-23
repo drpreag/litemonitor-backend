@@ -4,8 +4,6 @@ namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\SlackMessage;
 use App\Host;
 use Illuminate\Support\Facades\Log;
@@ -27,7 +25,6 @@ class HostDown extends Notification
 
     public function toSlack($notifiable)
     {              
-        //dd ($notifiable);
         $host = Host::findOrFail($notifiable->id);
 
         Log::info ("Server Down by ping " . $host->fqdn);

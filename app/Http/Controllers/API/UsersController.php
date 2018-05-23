@@ -8,8 +8,6 @@ use App\User;
 use App\Http\Resources\User as UserResource;
 use App\Http\Resources\UserCollection;
 
-use Illuminate\Support\Facades\Log;
-
 class UsersController extends Controller
 {
     /**

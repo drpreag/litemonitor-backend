@@ -3,8 +3,6 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\User;
-use App\Http\Resources\User as UserResource;
 
 class Role extends JsonResource
 {

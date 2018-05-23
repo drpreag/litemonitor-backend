@@ -3,8 +3,6 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\Resource;
-use Carbon\Carbon as Carbon;
-use App\Service;
 
 class Flapping extends Resource
 {

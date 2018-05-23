@@ -3,19 +3,14 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
-use App\Host;
-use App\Service;
-use Carbon\Carbon;
 use Spatie\SslCertificate\SslCertificate;
-//use Illuminate\Support\Facades\Log;
 
 class Observation extends Model
 {
     /**
      * Relation
      *
-     * @return App\Service
+     * @return \App\Service
      */
     public function service()
     {
@@ -153,7 +148,7 @@ class Observation extends Model
 	    			$result = "Not OK - invalid username/password";
 	        	}
 	        }
-    	} catch (Exception $e) {
+    	} catch (\Exception $e) {
 		   	$result = "Not OK - " . $e->getMessage();
     	} finally {
 			$stoptime  = microtime(true);    		

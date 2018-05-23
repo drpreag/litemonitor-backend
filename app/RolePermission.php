@@ -1,6 +1,6 @@
 <?php
 /**
- * PHP version 7.1
+ * PHP version 7.2
  *
  * @category Model
  * @package  App
@@ -11,10 +11,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\User as User;
 
 /**
- * Role
+ * RolePermisssin
  *
  * @category Model
  * @package  App

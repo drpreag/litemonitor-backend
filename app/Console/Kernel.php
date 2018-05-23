@@ -4,13 +4,9 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use App\Host;
 use App\Service;
 use App\Observation;
-//use App\Ping;
-use App\Probe;
 use Carbon\Carbon as Carbon;
-use Illuminate\Support\Facades\Log;
 
 class Kernel extends ConsoleKernel
 {
@@ -99,8 +95,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->call (
             function() {
-                // delete records older that 2 days
-                $ping = Ping::where('created_at','<',Carbon::now()->subDays(2)->toDateTimeString())->delete(); 
+                // delete records older that 2 days 
                 $observation = Observation::where('created_at','<',Carbon::now()->subDays(2)->toDateTimeString())->delete();
             }
         )->daily();

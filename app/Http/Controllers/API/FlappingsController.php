@@ -49,7 +49,7 @@ class FlappingsController extends Controller
        
         if ($flapping)
             return new FlappingResource($flapping);
-        return \Response::json([
+        return Response::json([
            'Not found'
         ], 404);
     }    

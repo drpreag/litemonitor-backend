@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Host;
+use App\Service;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\Host as HostResource;
 use App\Http\Resources\HostCollection;
-use App\Service;
-use App\Http\Resources\Service as ServiceResource;
 use App\Http\Resources\ServiceCollection;
-
-use Carbon\Carbon as Carbon;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
+use Psy\Util\Json;
 
 class HostsController extends Controller
 {

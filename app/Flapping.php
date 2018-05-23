@@ -2,11 +2,7 @@
 
 namespace App;
 
-use Illuminate\Foundation\Application;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Log;
-use App\Host;
-use App\Service;
 
 class Flapping extends Model
 {
@@ -15,7 +11,7 @@ class Flapping extends Model
     /**
      * Relation
      *
-     * @return App\Host
+     * @return \App\Host
      */
     public function host()
     {
@@ -25,7 +21,7 @@ class Flapping extends Model
     /**
      * Relation
      *
-     * @return App\Service
+     * @return \App\Service
      */
     public function service()
     {

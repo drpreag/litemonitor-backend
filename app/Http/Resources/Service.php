@@ -3,8 +3,6 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\Resource;
-use App\Host;
-use App\Probe;
 
 class Service extends Resource
 {

@@ -4,16 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Notifications\Notification;
 use App\Notifications\ServiceDown;
 use App\Notifications\ServiceUp;
 use Illuminate\Support\Facades\Log;
-use App\Flapping;
 use Carbon\Carbon;
-use App\Ping;
-use App\Host;
-use App\Probe;
-use App\Observation;
 
 class Service extends Model
 {
@@ -27,7 +21,7 @@ class Service extends Model
     /**
      * Relation
      *
-     * @return App\Probe
+     * @return \App\Probe
      */
     public function hasProbe()
     {
@@ -37,7 +31,7 @@ class Service extends Model
     /**
      * Relation
      *
-     * @return App\Host
+     * @return \App\Host
      */
     public function host()
     {
@@ -47,7 +41,7 @@ class Service extends Model
     /**
      * Relation
      *
-     * @return App\Observation
+     * @return \App\Observation
      */
     public function hasObservations()
     {
@@ -57,7 +51,7 @@ class Service extends Model
     /**
      * Relation
      *
-     * @return App\Observation
+     * @return \App\Observation
      */
     public function hasFlappings()
     {

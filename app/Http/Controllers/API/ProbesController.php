@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Probe;
-use App\Http\Resources\Probe as ProbeResource;
 use App\Http\Resources\ProbeCollection;
 
 class ProbesController extends Controller

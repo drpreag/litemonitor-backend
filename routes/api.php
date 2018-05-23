@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +16,6 @@ use Illuminate\Http\Request;
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
     //return $request->user();
 //});
-
 
 Route::group(['middleware' => 'api', 'prefix' => '', 'as' => 'api.'], function() {
 	
@@ -61,20 +60,5 @@ Route::group(['middleware' => 'api', 'prefix' => '', 'as' => 'api.'], function()
 
 	// Probes API
 	Route::get('probes', 'API\ProbesController@index')->name('probes');
-/*		
-	$router->get('hosts', 'HostsController@index');	
-	$router->get('host/{id}', 'HostsController@show');	
-	$router->post('host', 'HostsController@store');	
-	$router->put('host', 'HostsController@update');	
-	$router->delete('host/{id}', 'HostsController@destroy');
-	$router->get('host-stats', 'HostsController@hostStats');	
-	$router->get('host/{id}/pings', 'HostsController@getPings');
-
-
-
-
-	// Probes API
-	$router->get('probes', 'ProbesController@index');	
-*/
 
 });

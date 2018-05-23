@@ -4,7 +4,6 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Role;
 
 class User extends Authenticatable
 {
@@ -30,7 +29,7 @@ class User extends Authenticatable
     /**
      * Relation
      *
-     * @return App\Role
+     * @return \App\Role
      */
     public function hasRole()
     {

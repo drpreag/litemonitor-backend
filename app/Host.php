@@ -10,7 +10,7 @@ class Host extends Model
     /**
      * Relation
      *
-     * @return App\Service
+     * @return \App\Service
      */
     public function hasService()
     {
