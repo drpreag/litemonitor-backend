@@ -4,7 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+//use Illuminate\Http\Response as Response;
+//use Response;
 use App\Flapping;
 use App\Http\Resources\Flapping as FlappingResource;
 use App\Http\Resources\FlappingCollection;
@@ -49,9 +50,9 @@ class FlappingsController extends Controller
        
         if ($flapping)
             return new FlappingResource($flapping);
-        return Response::json([
-           'Not found'
-        ], 404);
+         return \Response::json([
+            'Not found'
+         ], 404);
     }    
 
 }
