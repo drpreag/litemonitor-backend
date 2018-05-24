@@ -16,10 +16,10 @@
 		"laravelcollective/html" : "^5.3.0",
 		"mews/purifier" : "^2.0",
 		"predis/predis" : "^1.1",
-		"spatie/ssl-certificate" : "^1.12"
+		"spatie/ssl-certificate" : "^1.12",
+		"barryvdh/laravel-cors" : "^0.11.0"
 	},
 	"require-dev" : {
-		"barryvdh/laravel-cors" : "^0.11.0",
 		"barryvdh/laravel-ide-helper" : "^2.4",
 		"filp/whoops" : "^2.0",
 		"fnayou/standards" : "^1.2",
@@ -45,7 +45,6 @@
 			"Tests\\" : "tests/"
 		}
 	},
-	"extra" : {},
 	"scripts" : {
 		"post-root-package-install" : "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
 		"post-create-project-cmd" : "@php artisan key:generate",
@@ -53,11 +52,11 @@
 			"Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
 			"@php artisan package:discover"
 		],
-	    "post-update-cmd": [
-	        "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-	        "php artisan ide-helper:generate",
-	        "php artisan ide-helper:meta"
-	    ]		
+		"post-update-cmd" : [
+			"Illuminate\\Foundation\\ComposerScripts::postUpdate",
+			"php artisan ide-helper:generate",
+			"php artisan ide-helper:meta"
+		]
 	},
 	"config" : {
 		"preferred-install" : "dist",
