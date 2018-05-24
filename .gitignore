@@ -9,3 +9,4 @@ Homestead.yaml
 .settings
 _ide_helper.php
 .phpstorm.meta.php
+checkstyle.xml
