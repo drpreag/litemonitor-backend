@@ -22,7 +22,7 @@ class FlappingsController extends Controller
         //$page = intval ($request->input('page', 1));
         //$per_page = intval ($request->input('per_page', 15));
 
-        $flappings = Flapping::orderby('id','desc')->get()->take(10);
+        $flappings = Flapping::orderby('id', 'desc')->get()->take(10);
         return new FlappingCollection($flappings);
     }
 
@@ -33,26 +33,27 @@ class FlappingsController extends Controller
      */
     public function getLast()
     {
-        $flapping = Flapping::orderby('id','desc')->get()->take(1);
-        if ($flapping)
+        $flapping = Flapping::orderby('id', 'desc')->get()->take(1);
+        if ($flapping) {
             return new FlappingResource($flapping[0]);
-    }    
+        }
+    }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id     
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function getNext($id)
     {
         $flapping = Flapping::Find($id+1);
        
-        if ($flapping)
+        if ($flapping) {
             return new FlappingResource($flapping);
+        }
          return \Response::json([
             'Not found'
          ], 404);
-    }    
-
+    }
 }

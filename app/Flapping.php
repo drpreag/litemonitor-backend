@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Flapping extends Model
 {
-	//public $timestamps = false;
+    //public $timestamps = false;
 
     /**
      * Relation
@@ -28,7 +28,7 @@ class Flapping extends Model
         return $this->belongsTo('App\Service', 'service_id', 'id');
     }
 
-    public static function info ($host_id, $service_id=null, $comment, $status)
+    public static function info($host_id, $comment, $status, $service_id = null)
     {
         $flapping = new static;
         $flapping->host_id = $host_id;

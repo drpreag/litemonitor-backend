@@ -32,7 +32,7 @@ class ServiceUpSlackNotify extends Notification
         $port = $notifiable->port;
         $hostProbe = Service::findOrFail($notifiable['id']);
 
-        Log::info ("Server $host->fqdn; Probe $hostProbe->name; Up by probe $probe->name : $port");
+        Log::info("Server $host->fqdn; Probe $hostProbe->name; Up by probe $probe->name : $port");
 
         return (new SlackMessage)
             ->success()
@@ -41,6 +41,6 @@ class ServiceUpSlackNotify extends Notification
                 $attachment->title($host->fqdn)
                 ->content("Service $hostProbe->name; Up by probe $probe->name:$port")
                 ->color('good');
-            });        
+            });
     }
 }

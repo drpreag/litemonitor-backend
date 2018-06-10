@@ -25,7 +25,7 @@ class ServicesController extends Controller
         //$per_page = intval ($request->input('per_page', 15));
         //$services = Service::paginate($per_page, ['*'], 'page', $page);
 
-        $services = Service::orderBy('active','desc')->orderBy('status')->orderby('status_change', 'desc')->get();
+        $services = Service::orderBy('active', 'desc')->orderBy('status')->orderby('status_change', 'desc')->get();
 
         return new ServiceCollection($services);
     }
@@ -38,7 +38,7 @@ class ServicesController extends Controller
      */
     public function show($id)
     {
-        $service = Service::findOrFail ($id);
+        $service = Service::findOrFail($id);
         return new ServiceResource($service);
     }
 
@@ -82,7 +82,7 @@ class ServicesController extends Controller
     }
 
     /**
-     * Update resource in storage 
+     * Update resource in storage
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -92,7 +92,7 @@ class ServicesController extends Controller
         $this->validate(
             $request,
             array(
-                'id'            => 'required|integer',                
+                'id'            => 'required|integer',
                 'name'          => 'required|max:64',
                 'host_id'       => 'required|integer',
                 'probe_id'      => 'required|integer',
@@ -112,7 +112,7 @@ class ServicesController extends Controller
         $service->probe_id = $request->probe_id;
         //if ($request->input('port'))
             $service->port = $request->port;
-        //if ($request->input('uri'))        
+        //if ($request->input('uri'))
             $service->uri = $request->uri;
         $service->active = $request->active === 1  ? true : false;
         //if ($request->input('user'))
@@ -123,20 +123,20 @@ class ServicesController extends Controller
         $service->save();
 
         return new ServiceResource($service);
-    }    
+    }
 
     /**
      * Display the specified resource.
      *
-     * @return Jsonable array 
+     * @return Jsonable array
      */
     public function serviceStats()
     {
         $stats=array();
 
-        $stats['up'] = Service::where('active',1)->where('status',1)->get()->count();
-        $stats['down'] = Service::where('active',1)->where('status',0)->get()->count();
-        $stats['non_monitored'] = Service::where('active',0)->get()->count();
+        $stats['up'] = Service::where('active', 1)->where('status', 1)->get()->count();
+        $stats['down'] = Service::where('active', 1)->where('status', 0)->get()->count();
+        $stats['non_monitored'] = Service::where('active', 0)->get()->count();
 
         return json_encode($stats);
     }
@@ -148,7 +148,7 @@ class ServicesController extends Controller
      */
     public function getObservations($id)
     {
-        $observations = Observation::where('service_id',$id)->orderby('id', 'desc')->take(60)->get();
+        $observations = Observation::where('service_id', $id)->orderby('id', 'desc')->take(60)->get();
         return new ObservationCollection($observations);
     }
 
@@ -160,11 +160,12 @@ class ServicesController extends Controller
      */
     public function destroy($id)
     {
-        $service = Service::findOrFail ($id);
+        $service = Service::findOrFail($id);
 
-        if ($service->delete())
+        if ($service->delete()) {
             return new ServiceResource($service);
-        else
+        } else {
             return false;
-    }    
+        }
+    }
 }

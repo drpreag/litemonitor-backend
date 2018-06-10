@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+
 // use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ApiTests extends TestCase
@@ -31,7 +32,7 @@ class ApiTests extends TestCase
         $response = $this->get('/api/service/1');
         $response->assertStatus(200);
         $response = $this->get('/api/service/1/observations');
-        $response->assertStatus(200);  
+        $response->assertStatus(200);
         $response = $this->get('/api/service-stats');
         $response->assertStatus(200);
         
@@ -47,7 +48,5 @@ class ApiTests extends TestCase
 
         $response = $this->get('/api/probes');
         $response->assertStatus(200);
-        
     }
-    
 }

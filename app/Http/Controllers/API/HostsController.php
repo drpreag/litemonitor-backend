@@ -36,7 +36,7 @@ class HostsController extends Controller
      */
     public function show($id)
     {
-        $host = Host::findOrFail ($id);
+        $host = Host::findOrFail($id);
         return new HostResource($host);
     }
 
@@ -63,7 +63,7 @@ class HostsController extends Controller
 
         $host->name = $request->name;
         $host->description = $request->description;
-        $host->fqdn = $request->fqdn;            
+        $host->fqdn = $request->fqdn;
         $host->active = $request->active === 1 ? true : false;
 
         $host->save();
@@ -72,7 +72,7 @@ class HostsController extends Controller
     }
 
     /**
-     * Update resource in storage 
+     * Update resource in storage
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -96,13 +96,13 @@ class HostsController extends Controller
 
         $host->name = $request->name;
         $host->description = $request->description;
-        $host->fqdn = $request->fqdn;            
-        $host->active = $request->active === 1 ? true : false;        
+        $host->fqdn = $request->fqdn;
+        $host->active = $request->active === 1 ? true : false;
 
         $host->save();
     
         return new HostResource($host);
-    }    
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -112,42 +112,44 @@ class HostsController extends Controller
      */
     public function destroy($id)
     {
-        $host = Host::findOrFail ($id);
+        $host = Host::findOrFail($id);
 
-        if ($host->delete())
+        if ($host->delete()) {
             return new HostResource($host);
-        else
+        } else {
             return false;
-    }    
+        }
+    }
 
     /**
      * Display the specified resource.
      *
-     * @return json array 
+     * @return json array
      */
     public function hostStats()
     {
         $stats=array();
 
-        $stats['monitored'] = Host::where('active',1)->get()->count();
-        $stats['non_monitored'] = Host::where('active',0)->get()->count();
+        $stats['monitored'] = Host::where('active', 1)->get()->count();
+        $stats['non_monitored'] = Host::where('active', 0)->get()->count();
 
         return json_encode($stats);
-    }  
+    }
 
     /**
      * Display the specified resource.
      *
-     * @return json array 
+     * @return json array
      */
     public function hostServices($id)
     {
         if (is_numeric($id)) {
-            $services = Service::where('host_id',$id)->get();
+            $services = Service::where('host_id', $id)->get();
 
-            if ($services->count() > 0)            
+            if ($services->count() > 0) {
                 return new ServiceCollection($services);
+            }
         }
         return null;
-    } 
+    }
 }

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Log;
 use App\Events\ServiceDownEvent;
 use App\Notifications\ServiceDownSlackNotify;
 
-class ServiceDownSlackNotification 
+class ServiceDownSlackNotification
 {
     /**
      * Create the event listener.

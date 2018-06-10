@@ -16,6 +16,6 @@ class RoleCollection extends ResourceCollection
     {
         return [
             'data' => $this->collection,
-        ]; 
+        ];
     }
 }

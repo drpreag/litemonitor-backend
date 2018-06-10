@@ -24,15 +24,15 @@ class HostUp extends Notification
     }
 
     public function toSlack($notifiable)
-    {              
+    {
         //dd ($notifiable);
         $host = Host::findOrFail($notifiable->id);
 
-        Log::info ("Server Up by ping " . $host->fqdn);
+        Log::info("Server Up by ping " . $host->fqdn);
 
         return (new SlackMessage)
             ->error()
-            ->content("$host->name is Up")        
+            ->content("$host->name is Up")
             ->attachment(function ($attachment) use ($host) {
                 $attachment->title($host->fqdn)
                 ->content("Up by Ping")

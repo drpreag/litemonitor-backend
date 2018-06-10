@@ -35,10 +35,9 @@ class RolesController extends Controller
     {
         if ($request->isMethod('put')) {    // put update
             $role = Role::findOrFail($request->id);
-            $role->exists = true;            
-        }
-        else { // post, new one
-            $role = new Role;      
+            $role->exists = true;
+        } else { // post, new one
+            $role = new Role;
         }
         $role->name = $request->name;
         $role->description = $request->description;
@@ -55,7 +54,7 @@ class RolesController extends Controller
      */
     public function show($id)
     {
-        $role = Role::findOrFail ($id);
+        $role = Role::findOrFail($id);
         return new RoleResource($role);
     }
 
@@ -67,11 +66,12 @@ class RolesController extends Controller
      */
     public function destroy($id)
     {
-        $role = Role::findOrFail ($id);
+        $role = Role::findOrFail($id);
 
-        if ($role->delete())
+        if ($role->delete()) {
             return new RoleResource($role);
-        else
+        } else {
             return false;
+        }
     }
 }

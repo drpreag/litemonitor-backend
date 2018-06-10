@@ -15,8 +15,9 @@ class Host extends Resource
     public function toArray($request)
     {
         $ip = gethostbyname($this->fqdn);
-        if (! filter_var($ip, FILTER_VALIDATE_IP))
+        if (! filter_var($ip, FILTER_VALIDATE_IP)) {
             $ip = null;
+        }
 
         return [
             'id' => $this->id,
@@ -26,7 +27,7 @@ class Host extends Resource
             'fqdn' => $this->fqdn,
             'ip' => $ip,
 
-            'active' => $this->active, 
+            'active' => $this->active,
 
             // 'status_change' => $this->status_change,
             // 'last_status_down' => $this->last_status_down,
@@ -35,6 +36,6 @@ class Host extends Resource
             //'created_at' => $this->created_at,
             'created_at' => $this->created_at->toDateTimeString(),
             'updated_at' => $this->updated_at->toDateTimeString(),
-        ];        
+        ];
     }
 }

@@ -24,14 +24,14 @@ class HostDown extends Notification
     }
 
     public function toSlack($notifiable)
-    {              
+    {
         $host = Host::findOrFail($notifiable->id);
 
-        Log::info ("Server Down by ping " . $host->fqdn);
+        Log::info("Server Down by ping " . $host->fqdn);
 
         return (new SlackMessage)
             ->error()
-            ->content("$host->name is Down")        
+            ->content("$host->name is Down")
             ->attachment(function ($attachment) use ($host) {
                 $attachment->title($host->fqdn)
                 ->content("Down by Ping")

@@ -27,8 +27,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call (
-            function() {
+        $schedule->call(
+            function () {
                 $services = Service::where('active', true)->get();             // ping probes
                 foreach ($services as $service) {
                     if ($service->hasProbe->ping_probe) {
@@ -41,11 +41,11 @@ class Kernel extends ConsoleKernel
         )->name('ping')->withoutOverlapping()->everyMinute();
 
 
-        $schedule->call (
-            function() {
+        $schedule->call(
+            function () {
                 $services = Service::where('active', true)->get();             // https/https ... probes
                 foreach ($services as $service) {
-                    if ($service->hasProbe->http_probe or $service->hasProbe->https_probe) {                    
+                    if ($service->hasProbe->http_probe or $service->hasProbe->https_probe) {
                         $observation = new Observation;
                         $observation->curlProbe($service);
                         $service->detectProbeFlapping();
@@ -54,8 +54,8 @@ class Kernel extends ConsoleKernel
             }
         )->name('curl')->withoutOverlapping()->everyMinute();
 
-        $schedule->call (
-            function() {
+        $schedule->call(
+            function () {
                 $services = Service::where('active', true)->get();             // ssh probes
                 foreach ($services as $service) {
                     if ($service->hasProbe->ssh_probe) {
@@ -67,8 +67,8 @@ class Kernel extends ConsoleKernel
             }
         )->name('ssh')->withoutOverlapping()->everyMinute();
 
-        $schedule->call (
-            function() {
+        $schedule->call(
+            function () {
                 $services = Service::where('active', true)->get();             // mysql probes
                 foreach ($services as $service) {
                     if ($service->hasProbe->mysql_probe) {
@@ -80,8 +80,8 @@ class Kernel extends ConsoleKernel
             }
         )->everyFiveMinutes();
 
-        $schedule->call (
-            function() {
+        $schedule->call(
+            function () {
                 $services = Service::where('active', true)->get();             // ssl probes
                 foreach ($services as $service) {
                     if ($service->hasProbe->ssl_probe) {
@@ -93,10 +93,12 @@ class Kernel extends ConsoleKernel
             }
         )->hourly();
 
-        $schedule->call (
-            function() {
-                // delete records older that 2 days 
-                $observation = Observation::where('created_at','<',Carbon::now()->subDays(2)->toDateTimeString())->delete();
+        $schedule->call(
+            function () {
+                // delete records older that 2 days
+                $observation = Observation::where('created_at', '<', Carbon::now()
+                                            ->subDays(2)->toDateTimeString())
+                                            ->delete();
             }
         )->daily();
     }

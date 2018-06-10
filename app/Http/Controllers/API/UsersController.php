@@ -43,11 +43,11 @@ class UsersController extends Controller
             )
         );
 
-        $user = new User;      
+        $user = new User;
 
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->role_id = $request->role_id;        
+        $user->role_id = $request->role_id;
         $user->active = $request->active;
 
         $user->save();
@@ -85,7 +85,7 @@ class UsersController extends Controller
         $user->save();
 
         return new UserResource($user);
-    }    
+    }
 
     /**
      * Display the specified resource.
@@ -95,7 +95,7 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        $user = User::findOrFail ($id);
+        $user = User::findOrFail($id);
         return new UserResource($user);
     }
 
@@ -107,11 +107,12 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::findOrFail ($id);
+        $user = User::findOrFail($id);
 
-        if ($user->delete())
+        if ($user->delete()) {
             return new UserResource($user);
-        else
+        } else {
             return false;
+        }
     }
 }

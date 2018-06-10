@@ -16,5 +16,4 @@ class Host extends Model
     {
         return $this->hasMany('App\Service', 'service_id');
     }
-
 }

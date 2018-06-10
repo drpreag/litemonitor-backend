@@ -24,6 +24,5 @@ class Flapping extends Resource
             'status' => $this->status,
             'created_at' => $this->created_at->toDateTimeString()
         ];
-
     }
 }
