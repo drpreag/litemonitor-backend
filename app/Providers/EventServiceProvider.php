@@ -12,8 +12,15 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\Event' => [
-            'App\Listeners\EventListener',
+        'App\Events\ServiceDownEvent' => [
+            'App\Listeners\ServiceDownPushNotification',
+            'App\Listeners\ServiceDownEmailNotification',
+            'App\Listeners\ServiceDownSlackNotification',
+        ],
+        'App\Events\ServiceUpEvent' => [
+            'App\Listeners\ServiceUpPushNotification',
+            'App\Listeners\ServiceUpEmailNotification',
+            'App\Listeners\ServiceUpSlackNotification',
         ],
     ];
 

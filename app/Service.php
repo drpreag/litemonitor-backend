@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use App\Notifications\ServiceDown;
-use App\Notifications\ServiceUp;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use App\Events\ServiceDownEvent;
+use App\Events\ServiceUpEvent;
 
 class Service extends Model
 {
@@ -83,8 +83,8 @@ class Service extends Model
                 $this->status = false;
                 $this->save(); 
                 Log::info ("$this->host_id Down, status changed, id=$this->id");
-                Flapping::info ($this->host_id, $this->id, "Down by probe " . $this->hasProbe->name, false);
-                $this->notify(new ServiceDown); // send Slack notification
+                Flapping::info ($this->host_id, $this->id, "Down by probe " . $this->hasProbe->name, false);               
+                event (new ServiceDownEvent ($this));
             } 
             if ($old->status == false and $new->status == true) {
                 // flaping from Down to Up                
@@ -94,7 +94,7 @@ class Service extends Model
                 $this->save();
                 Log::info ("$this->host_id Up, status changed id=$this->id");
                 Flapping::info ($this->host_id, $this->id, "Up by probe ". $this->hasProbe->name, true);
-                $this->notify(new ServiceUp); // send Slack notification                
+                event (new ServiceUpEvent ($this));
             }
             if ($this->status == false and $new->status == true) {
                 Log::info ("$this->host_id Probe Up, status fixed id= $this->id");
