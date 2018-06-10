@@ -32,9 +32,9 @@ class Flapping extends Model
     {
         $flapping = new static;
         $flapping->host_id = $host_id;
-        $flapping->service_id = $service_id;
         $flapping->comment = $comment;
         $flapping->status = $status;
+        $flapping->service_id = $service_id;
         $flapping->save();
 
         return $flapping;

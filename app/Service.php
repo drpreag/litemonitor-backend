@@ -84,7 +84,7 @@ class Service extends Model
                 $this->status = false;
                 $this->save();
                 Log::info("$this->host_id Down, status changed, id=$this->id");
-                Flapping::info($this->host_id, $this->id, "Down by probe " . $this->hasProbe->name, false);
+                Flapping::info($this->host_id, "Down by probe " . $this->hasProbe->name, false, $this->id );
                 event(new ServiceDownEvent($this));
             }
             if ($old->status == false and $new->status == true) {
@@ -94,7 +94,7 @@ class Service extends Model
                 $this->status = true;
                 $this->save();
                 Log::info("$this->host_id Up, status changed id=$this->id");
-                Flapping::info($this->host_id, $this->id, "Up by probe ". $this->hasProbe->name, true);
+                Flapping::info($this->host_id, "Up by probe ". $this->hasProbe->name, true, $this->id );
                 event(new ServiceUpEvent($this));
             }
             if ($this->status == false and $new->status == true) {
