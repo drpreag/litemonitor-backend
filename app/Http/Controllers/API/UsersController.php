@@ -37,9 +37,10 @@ class UsersController extends Controller
             $request,
             array(
                 'name'          => 'required|max:255',
-                'email'         => 'required|min:5|max:255|unique:users,email,'.$request->id,
+                'email'         => 'required|min:5|max:255|unique:users,email',
                 'role_id'       => 'required|integer|min:0|max:9',
-                'active'        => 'required|integer|min:0|max:1'
+                'active'        => 'required|integer|min:0|max:1',
+                'password'      => 'required|min:6|max:32',
             )
         );
 
@@ -49,6 +50,7 @@ class UsersController extends Controller
         $user->email = $request->email;
         $user->role_id = $request->role_id;
         $user->active = $request->active;
+        $user->password = $request->password;
 
         $user->save();
 
@@ -67,10 +69,12 @@ class UsersController extends Controller
         $this->validate(
             $request,
             array(
+                'id'            => 'required|integer',
                 'name'          => 'required|max:255',
                 'email'         => 'required|min:5|max:255|unique:users,email,'.$request->id,
                 'role_id'       => 'required|integer|min:0|max:9',
-                'active'        => 'required|integer|min:0|max:1'
+                'active'        => 'required|integer|min:0|max:1',
+                'password'      => 'nullable'
             )
         );
 

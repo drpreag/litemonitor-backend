@@ -23,7 +23,13 @@ class FlappingsController extends Controller
         //$per_page = intval ($request->input('per_page', 15));
 
         $flappings = Flapping::orderby('id', 'desc')->get()->take(10);
-        return new FlappingCollection($flappings);
+
+        if ($flappings) {
+            return new FlappingCollection($flappings);
+        }
+        return \Response::json([
+            'Not found'
+        ], 404);
     }
 
     /**
@@ -37,6 +43,9 @@ class FlappingsController extends Controller
         if ($flapping) {
             return new FlappingResource($flapping[0]);
         }
+        return \Response::json([
+            'Not found'
+        ], 404);
     }
 
     /**
@@ -52,8 +61,8 @@ class FlappingsController extends Controller
         if ($flapping) {
             return new FlappingResource($flapping);
         }
-         return \Response::json([
+        return \Response::json([
             'Not found'
-         ], 404);
+        ], 404);
     }
 }
