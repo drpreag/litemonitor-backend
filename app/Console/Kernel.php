@@ -98,7 +98,7 @@ class Kernel extends ConsoleKernel
             function () {
                 $hosts = Host::where('active', true)->get();                // collect geoIP data for each host
                 foreach ($hosts as $host) {
-                    $host->getGeoIPData();    
+                    $host->getGeoIPData();
                 }
             }
         )->hourly();

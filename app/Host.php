@@ -22,8 +22,8 @@ class Host extends Model
      * populate attributes: ip, latitude, longitude
      *
      */
-    public function getGeoIPData () 
-    {  
+    public function getGeoIPData()
+    {
         $geoIPApiKey = env('GEOIP_API');
         
         $this->ip = gethostbyname($this->fqdn);
@@ -36,7 +36,7 @@ class Host extends Model
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_PORT, 443);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);            
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
             $result = curl_exec($ch);
             if (!curl_errno($ch)) {
                 $response = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -46,9 +46,10 @@ class Host extends Model
             curl_close($ch);
             $json_result = json_decode($result, true);
             $this->ip = $json_result['ip'];
-            $this->latitude = floatval ($json_result['latitude']);
-            $this->longitude = floatval ($json_result['longitude']);
-            Log::info ("Host: " . $this->name . ", IP:" . $this->ip . " with geoipdata:" . $this->latitude. ", " . $this->longitude);
+            $this->latitude = floatval($json_result['latitude']);
+            $this->longitude = floatval($json_result['longitude']);
+            Log::info("Host: " . $this->name . ", IP:" . $this->ip .
+                        " with geoipdata:" . $this->latitude. ", " . $this->longitude);
             $this->save();
         }
         return $this;

@@ -23,7 +23,6 @@ class Host extends Resource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            
             'fqdn' => $this->fqdn,
             'ip' => $this->ip,
             'latitude' => $this->latitude,
