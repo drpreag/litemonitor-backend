@@ -20,7 +20,6 @@
     -->
     <file>app</file>
     <file>config</file>
-    <file>public</file>
     <file>resources</file>
     <file>routes</file>
     <file>tests</file>

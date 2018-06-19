@@ -20,7 +20,7 @@ class ApiTests extends TestCase
     {
         // POST - insert new User
         $data = [
-            "name" => "Test user foo",
+            "name" => "Test user",
             "email" => "foo@bar.com",
             "active" => 1,
             "role_id" => 1,
@@ -33,8 +33,8 @@ class ApiTests extends TestCase
         // PUT - update User
         $data = [
             "id" => $newUserId,
-            "name" => "Changed nam bar",
-            "email" => "newwfoo@bar.com",
+            "name" => "Test User with Name",
+            "email" => "new_foo@bar.com",
             "active" => 0,
             "role_id" => 1,
             "password" => "DFGH67skfglasdkf"
@@ -96,6 +96,14 @@ class ApiTests extends TestCase
     public function testProbesApi()
     {
         $response = $this->get('/api/probes');
+        $response->assertStatus(200);
+    }
+    
+    public function testStatsApi()
+    {
+        $response = $this->get('/api/host-stats');
+        $response->assertStatus(200);
+        $response = $this->get('/api/service-stats');
         $response->assertStatus(200);
     }
 }

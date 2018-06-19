@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Host;
 use App\Service;
 use App\Observation;
 use Carbon\Carbon as Carbon;
@@ -93,6 +94,15 @@ class Kernel extends ConsoleKernel
             }
         )->hourly();
 
+        $schedule->call(
+            function () {
+                $hosts = Host::where('active', true)->get();                // collect geoIP data for each host
+                foreach ($hosts as $host) {
+                    $host->getGeoIPData();    
+                }
+            }
+        )->hourly();
+        
         $schedule->call(
             function () {
                 // delete records older that 2 days

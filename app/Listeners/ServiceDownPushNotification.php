@@ -4,7 +4,7 @@ namespace App\Listeners;
 
 use App\Events\ServiceDownEvent;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
+//use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Log;
 
 class ServiceDownPushNotification
