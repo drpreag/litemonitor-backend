@@ -38,14 +38,13 @@ class Host extends Model
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
             $result = curl_exec($ch);
-            if (!curl_errno($ch)) {
-                $response = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            } else {
-                $response = "Error";
-            }
+//             if (!curl_errno($ch)) {
+//                 $response = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+//             } else {
+//                 $response = "Error";
+//             }
             curl_close($ch);
             $json_result = json_decode($result, true);
-            $this->ip = $json_result['ip'];
             $this->latitude = floatval($json_result['latitude']);
             $this->longitude = floatval($json_result['longitude']);
             Log::info("Host: " . $this->name . ", IP:" . $this->ip .

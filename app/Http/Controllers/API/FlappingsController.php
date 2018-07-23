@@ -4,8 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-//use Illuminate\Http\Response as Response;
-//use Response;
+// use Illuminate\Http\Response as Response;
 use App\Flapping;
 use App\Http\Resources\Flapping as FlappingResource;
 use App\Http\Resources\FlappingCollection;
