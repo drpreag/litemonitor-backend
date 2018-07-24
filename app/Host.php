@@ -31,19 +31,16 @@ class Host extends Model
             $this->ip = null;
         }
         if ($this->ip) {
-            $url = ("https://api.ipdata.co/".$this->ip."?api-key=".$geoIPApiKey);
+            $url = ("https://api.ipdata.co/". $this->ip . "?api-key=" . $geoIPApiKey);
+
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_PORT, 443);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
             $result = curl_exec($ch);
-//             if (!curl_errno($ch)) {
-//                 $response = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-//             } else {
-//                 $response = "Error";
-//             }
             curl_close($ch);
+            
             $json_result = json_decode($result, true);
             $this->latitude = floatval($json_result['latitude']);
             $this->longitude = floatval($json_result['longitude']);
