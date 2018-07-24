@@ -32,7 +32,7 @@ class Host extends Model
             $this->ip = null;
         }
         
-        if ($this->ip) {
+        if ($this->ip != null) {
             $url = ("https://api.ipdata.co/". $this->ip . "?api-key=" . $geoIPApiKey);
 
             $ch = curl_init();
