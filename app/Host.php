@@ -27,9 +27,11 @@ class Host extends Model
         $geoIPApiKey = env('GEOIP_API');
         
         $this->ip = gethostbyname($this->fqdn);
+
         if (! filter_var($this->ip, FILTER_VALIDATE_IP)) {
             $this->ip = null;
         }
+        
         if ($this->ip) {
             $url = ("https://api.ipdata.co/". $this->ip . "?api-key=" . $geoIPApiKey);
 
@@ -44,7 +46,7 @@ class Host extends Model
             $json_result = json_decode($result, true);
             $this->latitude = floatval($json_result['latitude']);
             $this->longitude = floatval($json_result['longitude']);
-            Log::info("Host: " . $this->name . ", IP:" . $this->ip .
+            Log::info("Host geoInfo: " . $this->name . ", IP:" . $this->ip .
                         " with geoipdata:" . $this->latitude. ", " . $this->longitude);
             $this->save();
         }
