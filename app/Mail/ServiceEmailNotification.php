@@ -41,6 +41,6 @@ class ServiceEmailNotification extends Mailable
             return $this->view('emails.service_email')
                 ->subject('Service Down - ' . $this->service->name)
                 ->with('service', $this->service);
-        }    
+        }
     }
 }

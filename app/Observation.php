@@ -196,7 +196,7 @@ class Observation extends Model
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 10); 
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
         curl_exec($ch);
         
         if (!curl_errno($ch)) {

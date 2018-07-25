@@ -69,9 +69,7 @@
     			<br><br>
     			Service {{ $service->name }} is <b>{{ $service->status ? 'UP' : 'DOWN' }}</b>
     			<br><br>
-    			Host: {{ $service->host->name }}
-    			<br><br>
-    			Time of event: {{ $service->status ? $service->last_status_up : $service->last_status_down }}
+    			Host: <b>{{ $service->host->name }}</b>
     			<br><br>
     			Time of event: {{ $service->status_change }}
                 <br>
