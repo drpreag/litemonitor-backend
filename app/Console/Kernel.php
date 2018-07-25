@@ -101,7 +101,7 @@ class Kernel extends ConsoleKernel
                     $host->getGeoIPData();
                 }
             }
-        )->everyFiveMinutes();
+        )->hourly();
         
         $schedule->call(
             function () {

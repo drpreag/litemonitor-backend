@@ -49,7 +49,6 @@ class Observation extends Model
         $testNumber = env('PING_COUNT', 5);
         $host = Host::findOrFail($service->host_id);
         
-        $status = true;
         $totalTime = 0.0;
         $failedTests = 0;
 
@@ -196,8 +195,10 @@ class Observation extends Model
         curl_setopt($ch, CURLOPT_PORT, $port);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10); 
         curl_exec($ch);
+        
         if (!curl_errno($ch)) {
             $result = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         } else {
@@ -228,7 +229,7 @@ class Observation extends Model
 
     public function mysqlProbe(Service &$service)
     {
-        set_time_limit(0);
+        set_time_limit(5);
         
         if (! $service->hasProbe->mysql_probe) {
             return;
