@@ -1,18 +1,12 @@
 <?php
 /**
  *
- * End-to-end tests
+ * Testing REST API interface
  *
  */
-namespace Tests\Feature;
+namespace App;
 
 use Tests\TestCase;
-
-// use App\User;
-// use App\Flapping;
-// use App\Service;
-// use App\Host;
-// use App\Role;
 
 class ApiTests extends TestCase
 {
