@@ -14,9 +14,9 @@ class AlterHostsTable extends Migration
     public function up()
     {
         Schema::table('hosts', function(Blueprint $table) {
-            $table->string('ip')->length(16)->default(null);
-            $table->decimal('latitude', 9, 6)->default(null);
-            $table->decimal('longitude', 9, 6)->default(null);
+            $table->string('ip')->length(16)->nullable()->default(null);
+            $table->decimal('latitude', 9, 6)->nullable()->default(null);
+            $table->decimal('longitude', 9, 6)->nullable()->default(null);
         });
     }
 

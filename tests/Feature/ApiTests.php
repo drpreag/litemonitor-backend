@@ -20,7 +20,7 @@ class ApiTests extends TestCase
             "role_id" => 1,
             "password" => "test12345"
         ];
-        $response = $this->call('POST', '/api/user', $data);
+        $response = $this->call('POST', '/api/users', $data);
         $response->assertStatus(201);
         $newUserId = $response->json(["data"])["id"];
 
@@ -33,11 +33,11 @@ class ApiTests extends TestCase
             "role_id" => 1,
             "password" => "DFGH67skfglasdkf"
         ];
-        $response = $this->call('PUT', '/api/user', $data);
+        $response = $this->call('PUT', '/api/users', $data);
         $response->assertStatus(200);
 
         // GET user/{id} show User
-        $response = $this->get('/api/user/'.$newUserId);
+        $response = $this->get('/api/users/'.$newUserId);
         $response->assertStatus(200);
 
         // GET users - list Users
@@ -45,7 +45,7 @@ class ApiTests extends TestCase
         $response->assertStatus(200);
 
         // DELETE user/{id} - delete User
-        $response = $this->delete('/api/user/'.$newUserId);
+        $response = $this->delete('/api/users/'.$newUserId);
         $response->assertStatus(200);
     }
 
@@ -53,9 +53,9 @@ class ApiTests extends TestCase
     {
         $response = $this->get('/api/hosts');
         $response->assertStatus(200);
-        $response = $this->get('/api/host/1');
+        $response = $this->get('/api/hosts/1');
         $response->assertStatus(200);
-        $response = $this->get('/api/host/1/services');
+        $response = $this->get('/api/hosts/1/services');
         $response->assertStatus(200);
     }
 
@@ -71,11 +71,11 @@ class ApiTests extends TestCase
     {
         $response = $this->get('/api/services');
         $response->assertStatus(200);
-        $response = $this->get('/api/service/1');
+        $response = $this->get('/api/services/1');
         $response->assertStatus(200);
-        $response = $this->get('/api/service/1/observations');
+        $response = $this->get('/api/services/1/observations');
         $response->assertStatus(200);
-        $response = $this->get('/api/service-stats');
+        $response = $this->get('/api/services-stats');
         $response->assertStatus(200);
     }
 
@@ -83,7 +83,7 @@ class ApiTests extends TestCase
     {
         $response = $this->get('/api/roles');
         $response->assertStatus(200);
-        $response = $this->get('/api/role/1');
+        $response = $this->get('/api/roles/1');
         $response->assertStatus(200);
     }
 
@@ -95,9 +95,9 @@ class ApiTests extends TestCase
     
     public function testStatsApi()
     {
-        $response = $this->get('/api/host-stats');
+        $response = $this->get('/api/hosts-stats');
         $response->assertStatus(200);
-        $response = $this->get('/api/service-stats');
+        $response = $this->get('/api/services-stats');
         $response->assertStatus(200);
     }
 }
