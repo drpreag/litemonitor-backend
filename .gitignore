@@ -13,3 +13,4 @@ checkstyle.xml
 /node_modules
 composer-lock.json
 package-lock.json
+/storage

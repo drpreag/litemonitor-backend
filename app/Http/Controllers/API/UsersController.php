@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\User;
 use App\Http\Resources\User as UserResource;
 use App\Http\Resources\UserCollection;
@@ -95,19 +96,23 @@ class UsersController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return ?\Illuminate\Http\Response
      */
     public function show($id)
     {
         $user = User::findOrFail($id);
-        return new UserResource($user);
+
+        if ($user!=null)
+            return new UserResource($user);
+        else
+            return Response::json(['error' => 'Resource not found' ], 404);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return ?\Illuminate\Http\Response
      */
     public function destroy($id)
     {
@@ -116,7 +121,7 @@ class UsersController extends Controller
         if ($user->delete()) {
             return new UserResource($user);
         } else {
-            return false;
+            return Response::json(['error' => 'Resource not found' ], 404);
         }
     }
 }

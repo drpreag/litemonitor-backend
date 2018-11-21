@@ -13,45 +13,52 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::middleware('auth:api')->get('/user', function (Request $request) {
-    //return $request->user();
-//});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
-Route::group(['middleware' => 'api', 'prefix' => '', 'as' => 'api.'], function () {
-    
+Route::post('/register', 'API\AuthController@register');
+Route::post('/login', 'API\AuthController@login');
+
+//Route::group(['middleware' => 'auth:api', 'prefix' => '', 'as' => 'api.'], function () {
+
+    Route::middleware('auth:api')->group(function () {
+        Route::post('logout', 'API\AuthController@logout');
+    });
+
     // Roles API
     Route::get('roles', 'API\RolesController@index')->name('roles');
-    Route::get('role/{id}', 'API\RolesController@show')->name('role');
-    Route::put('role', 'API\RolesController@update')->name('role');
-    Route::post('role', 'API\RolesController@store')->name('role');
-    Route::delete('role/{id}', 'API\RolesController@destroy')->name('role');
+    Route::get('roles/{id}', 'API\RolesController@show')->name('roles');
+    Route::put('roles', 'API\RolesController@update')->name('roles');
+    Route::post('roles', 'API\RolesController@store')->name('roles');
+    Route::delete('roles/{id}', 'API\RolesController@destroy')->name('roles');
 
     // Users API
     Route::get('users', 'API\UsersController@index')->name('users');
-    Route::get('user/{id}', 'API\UsersController@show')->name('user');
-    Route::put('user', 'API\UsersController@update')->name('user');
-    Route::post('user', 'API\UsersController@store')->name('user');
-    Route::delete('user/{id}', 'API\UsersController@destroy')->name('user');
+    Route::get('users/{id}', 'API\UsersController@show')->name('users');
+    Route::put('users', 'API\UsersController@update')->name('users');
+    Route::post('users', 'API\UsersController@store')->name('users');
+    Route::delete('users/{id}', 'API\UsersController@destroy')->name('users');
 
     // Services API
     Route::get('services', 'API\ServicesController@index')->name('services');
-    Route::get('service/{id}', 'API\ServicesController@show')->name('service');
-    Route::put('service', 'API\ServicesController@update')->name('service');
-    Route::post('service', 'API\ServicesController@store')->name('service');
-    Route::delete('service/{id}', 'API\ServicesController@destroy')->name('service');
+    Route::get('services/{id}', 'API\ServicesController@show')->name('services');
+    Route::put('services', 'API\ServicesController@update')->name('services');
+    Route::post('services', 'API\ServicesController@store')->name('services');
+    Route::delete('services/{id}', 'API\ServicesController@destroy')->name('services');
 
-    Route::get('service-stats', 'API\ServicesController@serviceStats')->name('servicestats');
-    Route::get('service/{id}/observations', 'API\ServicesController@getObservations')->name('getobservations');
+    Route::get('services-stats', 'API\ServicesController@serviceStats')->name('servicestats');
+    Route::get('services/{id}/observations', 'API\ServicesController@getObservations')->name('getobservations');
 
     // Hosts API
     Route::get('hosts', 'API\HostsController@index')->name('hosts');
-    Route::get('host/{id}', 'API\HostsController@show')->name('host');
-    Route::put('host', 'API\HostsController@update')->name('host');
-    Route::post('host', 'API\HostsController@store')->name('host');
-    Route::delete('host/{id}', 'API\HostsController@destroy')->name('host');
+    Route::get('hosts/{id}', 'API\HostsController@show')->name('hosts');
+    Route::put('hosts', 'API\HostsController@update')->name('hosts');
+    Route::post('hosts', 'API\HostsController@store')->name('hosts');
+    Route::delete('hosts/{id}', 'API\HostsController@destroy')->name('hosts');
 
-    Route::get('host-stats', 'API\HostsController@hostStats')->name('hoststats');
-    Route::get('host/{id}/services', 'API\HostsController@hostServices')->name('hostservices');
+    Route::get('hosts-stats', 'API\HostsController@hostStats')->name('hoststats');
+    Route::get('hosts/{id}/services', 'API\HostsController@hostServices')->name('hostservices');
 
     // Flapping API
     Route::get('flappings', 'API\FlappingsController@index')->name('flappings');
@@ -60,4 +67,4 @@ Route::group(['middleware' => 'api', 'prefix' => '', 'as' => 'api.'], function (
 
     // Probes API
     Route::get('probes', 'API\ProbesController@index')->name('probes');
-});
+//});

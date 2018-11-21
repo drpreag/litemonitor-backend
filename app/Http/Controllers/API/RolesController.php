@@ -59,6 +59,23 @@ class RolesController extends Controller
     }
 
     /**
+     * Update resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request)
+    {
+        $role = Role::findOrFail($request->id);
+        $role->exists = true;
+        $role->name = $request->name;
+        $role->description = $request->description;
+        $role->save();
+
+        return new RoleResource($role);
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
