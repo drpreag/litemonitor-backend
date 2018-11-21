@@ -9,18 +9,16 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function login (Request $request) {
+    public function login(Request $request)
+    {
 
         $http = new \GuzzleHttp\Client;
-		try {
+        try {
             $response = $http->post(config('services.passport.login_endpoint'), [
-            // $response = $http->post('http://localhost:8000/oauth/token', [
                 'form_params' => [
                     'grant_type' => 'password',
                     'client_id' => config('services.passport.client_id'),
-                    // 'client_id' => 2,
                     'client_secret' => config('services.passport.client_secret'),
-                    // 'client_secret' => 'ZwhWxC3qku3UjChnWMdME6vb9zIVS3R0q9RvggKU',
                     'username' => $request->username,
                     'password' => $request->password,
                 ]
@@ -29,12 +27,12 @@ class AuthController extends Controller
         } catch (\GuzzleHttp\Exception\BadResponseException $e) {
             if ($e->getCode() === 400) {
                 return response()->json('Invalid Request. Please enter a username or a password.', $e->getCode());
-            } else if ($e->getCode() === 401) {
+            } elseif ($e->getCode() === 401) {
                 return response()->json('Your credentials are incorrect. Please try again', $e->getCode());
             }
             return response()->json('Something went wrong on the server.', $e->getCode());
         }
-	}
+    }
 
     public function register(Request $request)
     {
@@ -59,5 +57,4 @@ class AuthController extends Controller
         });
         return response()->json('Logged out successfully', 200);
     }
-
 }

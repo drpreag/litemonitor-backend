@@ -34,6 +34,10 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
+        if (is_null($request->password)) {
+            $request->request->add(['password'=>\Illuminate\Support\Str::random(32)]);
+        }
+
         $this->validate(
             $request,
             array(
@@ -41,7 +45,7 @@ class UsersController extends Controller
                 'email'         => 'required|min:5|max:255|unique:users,email',
                 'role_id'       => 'required|integer|min:0|max:9',
                 'active'        => 'required|integer|min:0|max:1',
-                'password'      => 'required|min:6|max:32',
+                'password'      => 'required|min:6|max:32'
             )
         );
 
@@ -51,7 +55,7 @@ class UsersController extends Controller
         $user->email = $request->email;
         $user->role_id = $request->role_id;
         $user->active = $request->active;
-        $user->password = $request->password;
+        $user->password = bcrypt($request->password);
 
         $user->save();
 
@@ -102,10 +106,11 @@ class UsersController extends Controller
     {
         $user = User::findOrFail($id);
 
-        if ($user!=null)
+        if ($user!=null) {
             return new UserResource($user);
-        else
+        } else {
             return Response::json(['error' => 'Resource not found' ], 404);
+        }
     }
 
     /**
