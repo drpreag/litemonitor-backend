@@ -39,6 +39,7 @@ class ServicesController extends Controller
     public function show($id)
     {
         $service = Service::findOrFail($id);
+
         return new ServiceResource($service);
     }
 
@@ -148,9 +149,20 @@ class ServicesController extends Controller
      */
     public function getObservations($id)
     {
-        $observations = Observation::where('service_id', $id)->orderby('id', 'desc')->take(60)->get();
+        $observations = Observation::where('service_id', $id)->where('status',0)->orderby('id', 'desc')->take(10)->get();
         return new ObservationCollection($observations);
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getLastHourObservations($id)
+    {
+        $observations = Observation::where('service_id', $id)->orderby('id', 'desc')->take(60)->get();
+        return new ObservationCollection($observations);
+    }    
 
     /**
      * Remove the specified resource from storage.
