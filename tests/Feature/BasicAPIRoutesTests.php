@@ -75,6 +75,9 @@ class BasicAPIRoutesTests extends TestCase
         $response->assertStatus(200);
         $response = $this->get('/api/flappings/last');
         $response->assertStatus(200);
+        $lastId = $response->json(["data"])["id"];
+        $response = $this->get('/api/flappings/'.$lastId.'/next');
+        $response->assertStatus(404);
     }
 
     public function testServicesApi()

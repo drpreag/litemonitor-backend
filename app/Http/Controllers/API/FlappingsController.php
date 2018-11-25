@@ -55,7 +55,7 @@ class FlappingsController extends Controller
      */
     public function getNext($id)
     {
-        $flapping = Flapping::Find($id+1);
+        $flapping = Flapping::find($id+1);
        
         if ($flapping) {
             return new FlappingResource($flapping);
