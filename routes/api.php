@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,17 +14,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     \Log::info($request);
 //     return $request->user();
 // });
 
-Route::post('/register', 'API\AuthController@register');
-Route::post('/login', 'API\AuthController@login');
+Route::post('register', 'API\AuthController@register');
+Route::post('login', 'API\AuthController@login');
 
-// Route::group(['middleware' => 'auth:api', 'prefix' => '', 'as' => 'api.'], function () {
+Route::group(['middleware' => 'auth:api', 'prefix' => '', 'as' => 'api.'], function () {
 
-    Route::middleware('auth:api')->group(function () {
         Route::post('logout', 'API\AuthController@logout');
-    });
+        Route::get('/user', function (Request $request) {
+            return $request->user();
+        });
 
         // Roles API
         Route::get('roles', 'API\RolesController@index')->name('roles');
@@ -69,4 +71,4 @@ Route::post('/login', 'API\AuthController@login');
         // Probes API
         Route::get('probes', 'API\ProbesController@index')->name('probes');
 
-    // });
+    });

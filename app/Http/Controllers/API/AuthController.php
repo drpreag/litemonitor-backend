@@ -11,7 +11,6 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-
         $http = new \GuzzleHttp\Client;
         try {
             $response = $http->post(config('services.passport.login_endpoint'), [
@@ -38,13 +37,14 @@ class AuthController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'username' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
         ]);
+
         return User::create([
             'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'email' => $request->username,
+            'password' => bcrypt($request->password),
             'active' => 1,
             'role_id' => 1
         ]);
