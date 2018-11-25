@@ -50,7 +50,7 @@ class BasicAPIRoutesTests extends TestCase
 
         // DELETE user/{id} - delete User
         $response = $this->delete('/api/users/'.$newUserId);
-        $response->assertStatus(200); 
+        $response->assertStatus(200);
     }
 
     public function testHostsApi()
@@ -122,5 +122,4 @@ class BasicAPIRoutesTests extends TestCase
         $response = $this->get('/api/services-stats');
         $response->assertStatus(200);
     }
-    
 }
