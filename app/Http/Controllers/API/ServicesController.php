@@ -149,7 +149,7 @@ class ServicesController extends Controller
      */
     public function getObservations($id)
     {
-        $observations = Observation::where('service_id', $id)->where('status',0)->orderby('id', 'desc')->take(10)->get();
+        $observations = Observation::where('service_id', $id)->where('status', 0)->orderby('id', 'desc')->take(10)->get();
         return new ObservationCollection($observations);
     }
 
@@ -162,7 +162,7 @@ class ServicesController extends Controller
     {
         $observations = Observation::where('service_id', $id)->orderby('id', 'desc')->take(60)->get();
         return new ObservationCollection($observations);
-    }    
+    }
 
     /**
      * Remove the specified resource from storage.

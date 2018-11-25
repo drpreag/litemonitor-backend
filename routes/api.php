@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -70,5 +71,4 @@ Route::group(['middleware' => 'auth:api', 'prefix' => '', 'as' => 'api.'], funct
 
         // Probes API
         Route::get('probes', 'API\ProbesController@index')->name('probes');
-
-    });
+});

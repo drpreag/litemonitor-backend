@@ -14,3 +14,4 @@ checkstyle.xml
 composer-lock.json
 package-lock.json
 /storage
+/tmp
