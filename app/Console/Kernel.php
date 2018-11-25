@@ -105,8 +105,9 @@ class Kernel extends ConsoleKernel
         
         $schedule->call(
             function () {
-                // delete records older that 2 days
+                // delete records with status OK older that 2 days, we keep all status not_OK for good
                 $observation = Observation::where('created_at', '<', Carbon::now()
+                                            ->where('status', 1)
                                             ->subDays(2)->toDateTimeString())
                                             ->delete();
             }

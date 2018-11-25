@@ -21,7 +21,7 @@ class Observation extends Resource
             'status' => $this->status,
             'speed' => $this->speed,
             'result' => $this->result,
-            'created_at' => $this->created_at->toTimeString()
+            'created_at' => $this->created_at->toDateTimeString()
         ];
     }
 }
