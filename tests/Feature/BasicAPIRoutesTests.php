@@ -6,28 +6,33 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class PublicRoutesTests extends TestCase
+class BasicAPIRoutesTests extends TestCase
 {
 
     public function testUsersApi()
     {
+        // $user = factory(\App\User::class)->create();
+        $user = \App\User::find(1);
+        $this->actingAs($user, 'api');
+
         // POST - insert new User
         $data = [
             "name" => "Test user",
             "email" => "foo@bar.com",
             "active" => 1,
             "role_id" => 1,
-            "password" => "test12345"
+            "password" => "secret"
         ];
         $response = $this->call('POST', '/api/users', $data);
         $response->assertStatus(201);
+
         $newUserId = $response->json(["data"])["id"];
 
         // PUT - update User
         $data = [
             "id" => $newUserId,
-            "name" => "Test User with Name",
-            "email" => "new_foo@bar.com",
+            "name" => "Altered user name",
+            "email" => "alter_foo@bar.com",
             "active" => 0,
             "role_id" => 1,
             "password" => "DFGH67skfglasdkf"
@@ -45,11 +50,14 @@ class PublicRoutesTests extends TestCase
 
         // DELETE user/{id} - delete User
         $response = $this->delete('/api/users/'.$newUserId);
-        $response->assertStatus(200);
+        $response->assertStatus(200); 
     }
 
     public function testHostsApi()
     {
+        $user = \App\User::find(1);
+        $this->actingAs($user, 'api');
+
         $response = $this->get('/api/hosts');
         $response->assertStatus(200);
         $response = $this->get('/api/hosts/1');
@@ -60,6 +68,9 @@ class PublicRoutesTests extends TestCase
 
     public function testFlappingsApi()
     {
+        $user = \App\User::find(1);
+        $this->actingAs($user, 'api');
+
         $response = $this->get('/api/flappings');
         $response->assertStatus(200);
         $response = $this->get('/api/flappings/last');
@@ -68,6 +79,9 @@ class PublicRoutesTests extends TestCase
 
     public function testServicesApi()
     {
+        $user = \App\User::find(1);
+        $this->actingAs($user, 'api');
+
         $response = $this->get('/api/services');
         $response->assertStatus(200);
         $response = $this->get('/api/services/1');
@@ -80,6 +94,9 @@ class PublicRoutesTests extends TestCase
 
     public function testRolesApi()
     {
+        $user = \App\User::find(1);
+        $this->actingAs($user, 'api');
+
         $response = $this->get('/api/roles');
         $response->assertStatus(200);
         $response = $this->get('/api/roles/1');
@@ -88,16 +105,22 @@ class PublicRoutesTests extends TestCase
 
     public function testProbesApi()
     {
+        $user = \App\User::find(1);
+        $this->actingAs($user, 'api');
+
         $response = $this->get('/api/probes');
         $response->assertStatus(200);
     }
     
     public function testStatsApi()
     {
+        $user = \App\User::find(1);
+        $this->actingAs($user, 'api');
+
         $response = $this->get('/api/hosts-stats');
         $response->assertStatus(200);
         $response = $this->get('/api/services-stats');
         $response->assertStatus(200);
     }
-
+    
 }
