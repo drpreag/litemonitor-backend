@@ -66,28 +66,21 @@ class UsersController extends Controller
      */
     public function update(Request $request)
     {
-
-        $this->validate(
-            $request,
-            array(
+        $request->validate([
                 'id'            => 'required|integer',
                 'name'          => 'required|max:255',
                 'email'         => 'required|min:5|max:255|unique:users,email,'.$request->id,
                 'role_id'       => 'required|integer|min:0|max:9',
-                'active'        => 'required|integer|min:0|max:1',
-                'password'      => 'nullable'
-            )
-        );
+                'active'        => 'required|integer|min:0|max:1'
+            ]);
 
         $user = User::findOrFail($request->id);
         $user->exists = true;
-
         $user->name = $request->name;
         $user->email = $request->email;
         $user->role_id = $request->role_id;
         $user->active = $request->active;// ? true : false;
-          
-        $user->save();
+        $user->update();
 
         return new UserResource($user);
     }

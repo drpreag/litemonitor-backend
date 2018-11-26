@@ -1,5 +1,3 @@
-![Build Status](https://travis-ci.org/drpreag/litemonitor-backend.svg?branch=master)
-
 
 ## Lite Monitor
 
