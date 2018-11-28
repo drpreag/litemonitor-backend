@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Host;
 use App\Service;
+use App\RolePermission;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Host as HostResource;
 use App\Http\Resources\HostCollection;
@@ -13,6 +14,16 @@ use Psy\Util\Json;
 
 class HostsController extends Controller
 {
+    public function Permission ()
+    {
+        $usersRole = auth('api')->user()->role_id;
+        $permission = RolePermission::
+            where('object', "Hosts")->
+            where('role_id', $usersRole)->
+            first();
+        return ($permission);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -20,9 +31,8 @@ class HostsController extends Controller
      */
     public function index(Request $request)
     {
-        //$page = intval ($request->input('page', 1));
-        //$per_page = intval ($request->input('per_page', 15));
-        //$hosts = Host::paginate($per_page, ['*'], 'page', $page);
+        if (! $this->Permission()->b)
+            return \Response::json(['error' => 'Not nought privileges' ], 401);
 
         $hosts = Host::orderBy('active', 'desc')->get();
         return new HostCollection($hosts);
@@ -36,6 +46,9 @@ class HostsController extends Controller
      */
     public function show($id)
     {
+        if (! $this->Permission()->r)
+            return \Response::json(['error' => 'Not nought privileges' ], 401);
+
         $host = Host::findOrFail($id);
         return new HostResource($host);
     }
@@ -48,6 +61,9 @@ class HostsController extends Controller
      */
     public function store(Request $request)
     {
+        if (! $this->Permission()->a)
+            return \Response::json(['error' => 'Not nought privileges' ], 401);
+
         // validation
         $this->validate(
             $request,
@@ -79,6 +95,9 @@ class HostsController extends Controller
      */
     public function update(Request $request)
     {
+        if (! $this->Permission()->e)
+            return \Response::json(['error' => 'Not nought privileges' ], 401);
+
         // validation
         $this->validate(
             $request,
@@ -112,6 +131,9 @@ class HostsController extends Controller
      */
     public function destroy($id)
     {
+        if (! $this->Permission()->d)
+            return \Response::json(['error' => 'Not nought privileges' ], 401);
+
         $host = Host::findOrFail($id);
 
         if ($host->delete()) {

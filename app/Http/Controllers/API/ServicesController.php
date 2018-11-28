@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Http\Request;
 use App\Service;
+use App\RolePermission;
 use App\Http\Resources\Service as ServiceResource;
 use App\Http\Resources\ServiceCollection;
 use App\Observation;
@@ -14,6 +15,16 @@ use Carbon\Carbon as Carbon;
 
 class ServicesController extends Controller
 {
+    public function Permission ()
+    {
+        $usersRole = auth('api')->user()->role_id;
+        $permission = RolePermission::
+            where('object', "Services")->
+            where('role_id', $usersRole)->
+            first();
+        return ($permission);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,12 +32,10 @@ class ServicesController extends Controller
      */
     public function index(Request $request)
     {
-        //$page = intval ($request->input('page', 1));
-        //$per_page = intval ($request->input('per_page', 15));
-        //$services = Service::paginate($per_page, ['*'], 'page', $page);
+        if (!$this->Permission()->b)
+            return \Response::json(['error' => 'Not nought privileges' ], 401);
 
         $services = Service::orderBy('active', 'desc')->orderBy('status')->orderby('status_change', 'desc')->get();
-
         return new ServiceCollection($services);
     }
 
@@ -38,8 +47,9 @@ class ServicesController extends Controller
      */
     public function show($id)
     {
+        if (!$this->Permission()->r)
+            return \Response::json(['error' => 'Not nought privileges' ], 401);
         $service = Service::findOrFail($id);
-
         return new ServiceResource($service);
     }
 
@@ -51,6 +61,9 @@ class ServicesController extends Controller
      */
     public function store(Request $request)
     {
+        if (!$this->Permission()->a)
+            return \Response::json(['error' => 'Not nought privileges' ], 401);
+
         $this->validate(
             $request,
             array(
@@ -76,7 +89,7 @@ class ServicesController extends Controller
         $service->user = $request->user;
         $service->pass = $request->pass;
         $service->status_change = Carbon::now();
-        
+
         $service->save();
 
         return new ServiceResource($service);
@@ -90,6 +103,9 @@ class ServicesController extends Controller
      */
     public function update(Request $request)
     {
+        if (!$this->Permission()->e)
+            return \Response::json(['error' => 'Not nought privileges' ], 401);
+
         $this->validate(
             $request,
             array(
@@ -172,6 +188,9 @@ class ServicesController extends Controller
      */
     public function destroy($id)
     {
+        if (! $this->Permission()->d)
+            return \Response::json(['error' => 'Not nought privileges' ], 401);
+
         $service = Service::findOrFail($id);
 
         if ($service->delete()) {
