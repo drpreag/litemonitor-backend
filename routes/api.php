@@ -16,6 +16,9 @@ use Illuminate\Http\Request;
 
 Route::post('register', 'API\AuthController@register');
 Route::post('login', 'API\AuthController@login');
+Route::get('hosts-stats', 'API\HostsController@hostStats')->name('hoststats');
+Route::get('ip_addresses', 'API\HostsController@ipAddresses')->name('ip_addresses');
+Route::get('services-stats', 'API\ServicesController@serviceStats')->name('servicestats');
 
 Route::group(['middleware' => 'auth:api', 'prefix' => '', 'as' => 'api.'], function () {
 
@@ -45,18 +48,19 @@ Route::group(['middleware' => 'auth:api', 'prefix' => '', 'as' => 'api.'], funct
         Route::post('services', 'API\ServicesController@store')->name('services');
         Route::delete('services/{id}', 'API\ServicesController@destroy')->name('services');
 
-        Route::get('services-stats', 'API\ServicesController@serviceStats')->name('servicestats');
+//        Route::get('services-stats', 'API\ServicesController@serviceStats')->name('servicestats');
         Route::get('services/{id}/observations', 'API\ServicesController@getObservations')->name('getobservations');
         Route::get('services/{id}/lasthourobservations', 'API\ServicesController@getLastHourObservations')->name('getlasthourobservations');
 
         // Hosts API
+        Route::get('dashboard_hosts', 'API\HostsController@dashboard')->name('dashboardhosts');
         Route::get('hosts', 'API\HostsController@index')->name('hosts');
         Route::get('hosts/{id}', 'API\HostsController@show')->name('hosts');
         Route::put('hosts', 'API\HostsController@update')->name('hosts');
         Route::post('hosts', 'API\HostsController@store')->name('hosts');
         Route::delete('hosts/{id}', 'API\HostsController@destroy')->name('hosts');
 
-        Route::get('hosts-stats', 'API\HostsController@hostStats')->name('hoststats');
+//        Route::get('hosts-stats', 'API\HostsController@hostStats')->name('hoststats');
         Route::get('hosts/{id}/services', 'API\HostsController@hostServices')->name('hostservices');
 
         // Flapping API

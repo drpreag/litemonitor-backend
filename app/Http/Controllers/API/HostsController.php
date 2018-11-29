@@ -39,6 +39,20 @@ class HostsController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function dashboard(Request $request)
+    {
+        if (! $this->Permission()->b)
+            return \Response::json(['error' => 'Not nought privileges' ], 401);
+
+        $hosts = Host::where('active', true)->get();
+        return new HostCollection($hosts);
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -173,5 +187,16 @@ class HostsController extends Controller
             }
         }
         return null;
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function ipAddresses(Request $request)
+    {
+        $hosts = Host::orderBy('active', 'desc')->get();
+        return new HostCollection($hosts);
     }
 }

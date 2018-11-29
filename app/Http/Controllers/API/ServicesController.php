@@ -35,7 +35,7 @@ class ServicesController extends Controller
         if (!$this->Permission()->b)
             return \Response::json(['error' => 'Not nought privileges' ], 401);
 
-        $services = Service::orderBy('active', 'desc')->orderBy('status')->orderby('status_change', 'desc')->get();
+        $services = Service::orderBy('host_id')->orderBy('probe_id')->orderby('status_change', 'desc')->get();
         return new ServiceCollection($services);
     }
 
