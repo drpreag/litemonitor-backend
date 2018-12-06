@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Host;
 use App\Service;
-use App\RolePermission;
+use App\Permission;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Host as HostResource;
 use App\Http\Resources\HostCollection;
@@ -17,7 +17,7 @@ class HostsController extends Controller
     public function Permission ()
     {
         $usersRole = auth('api')->user()->role_id;
-        $permission = RolePermission::
+        $permission = Permission::
             where('object', "Hosts")->
             where('role_id', $usersRole)->
             first();

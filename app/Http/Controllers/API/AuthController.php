@@ -23,6 +23,7 @@ class AuthController extends Controller
                     'password' => $request->password,
                 ]
             ]);
+            \Log::info ("User " . $request->username . " Logged in");
             return $response->getBody();
         } catch (\GuzzleHttp\Exception\BadResponseException $e) {
             if ($e->getCode() === 400) {
@@ -41,6 +42,7 @@ class AuthController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6'
         ]);
+        \Log::info ("New user " . $request->email . " registered");
 
         return User::create([
             'name' => $request->name,
@@ -53,9 +55,15 @@ class AuthController extends Controller
     
     public function logout()
     {
-        auth()->user()->tokens->each(function ($token, $key) {
-            $token->delete();
-        });
-        return response()->json('Logged out successfully', 200);
+        if (auth()->user()) {
+            auth()->user()->tokens->each(function ($token, $key) {
+                $token->delete();
+            });
+            \Log::info ("User " . auth()->user()->email . " Logged out");
+            return response()->json('Logged out successfully', 200);
+        } else {
+            \Log::info ("Logout error");
+            return response()->json('Logout error', 500);
+        }
     }
 }

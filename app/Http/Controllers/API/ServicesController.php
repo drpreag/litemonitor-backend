@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Http\Request;
 use App\Service;
-use App\RolePermission;
+use App\Permission;
 use App\Http\Resources\Service as ServiceResource;
 use App\Http\Resources\ServiceCollection;
 use App\Observation;
@@ -18,7 +18,7 @@ class ServicesController extends Controller
     public function Permission ()
     {
         $usersRole = auth('api')->user()->role_id;
-        $permission = RolePermission::
+        $permission = Permission::
             where('object', "Services")->
             where('role_id', $usersRole)->
             first();
@@ -48,7 +48,7 @@ class ServicesController extends Controller
     public function show($id)
     {
         if (!$this->Permission()->r)
-            return \Response::json(['error' => 'Not nought privileges' ], 401);
+            return \Response::json(['error' => 'Not enought privileges' ], 401);
         $service = Service::findOrFail($id);
         return new ServiceResource($service);
     }
@@ -127,15 +127,11 @@ class ServicesController extends Controller
         $service->name = $request->name;
         $service->host_id = $request->host_id;
         $service->probe_id = $request->probe_id;
-        //if ($request->input('port'))
-            $service->port = $request->port;
-        //if ($request->input('uri'))
-            $service->uri = $request->uri;
+        $service->port = $request->port;
+        $service->uri = $request->uri;
         $service->active = $request->active === 1  ? true : false;
-        //if ($request->input('user'))
-            $service->user = $request->user;
-        //if ($request->input('pass'))
-            $service->pass = $request->pass;
+        $service->user = $request->user;
+        $service->pass = $request->pass;
         
         $service->save();
 

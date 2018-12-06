@@ -13,7 +13,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * RolePermisssin
+ * Permission
  *
  * @category Model
  * @package  App
@@ -21,7 +21,16 @@ use Illuminate\Database\Eloquent\Model;
  * @license  http://softwarepieces.com/licence Private owned
  * @link     http://softwarepieces.com/
  */
-class RolePermission extends Model
+class Permission extends Model
 {
-    protected $table = 'roles_permissions';
+    /**
+     * Relation
+     *
+     * @return \App\Role
+     */
+    public function inRole()
+    {
+        return $this->belongsTo('App\Role', 'role_id', 'id');
+    }
+
 }

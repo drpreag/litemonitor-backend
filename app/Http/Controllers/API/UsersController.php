@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\User;
-use App\RolePermission;
+use App\Permission;
 use App\Http\Resources\User as UserResource;
 use App\Http\Resources\UserCollection;
 
@@ -15,7 +15,7 @@ class UsersController extends Controller
     public function Permission ()
     {
         $usersRole = auth('api')->user()->role_id;
-        $permission = RolePermission::
+        $permission = Permission::
             where('object', "Users")->
             where('role_id', $usersRole)->
             first();

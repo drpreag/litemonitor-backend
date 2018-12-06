@@ -23,13 +23,20 @@ Route::get('services-stats', 'API\ServicesController@serviceStats')->name('servi
 Route::group(['middleware' => 'auth:api', 'prefix' => '', 'as' => 'api.'], function () {
 
         Route::post('logout', 'API\AuthController@logout');
-        Route::get('user', function (Request $request) {
-            return $request->user();
+        Route::get('whoami', function (Request $request) {
+            if ($request->user()) {
+                \Log::info('auth user requested ' . $request->user()->email);
+                return $request->user();
+            } else {
+                \Log::info('non-auth user requested ');
+                return \Response::json(['error' => 'Not nought privileges'], 401);
+            }
         });
 
         // Roles API
         Route::get('roles', 'API\RolesController@index')->name('roles');
         Route::get('roles/{id}', 'API\RolesController@show')->name('roles');
+        Route::get('roles/{id}/permissions', 'API\RolesController@permissions')->name('roles_permissions');
         Route::put('roles', 'API\RolesController@update')->name('roles');
         Route::post('roles', 'API\RolesController@store')->name('roles');
         Route::delete('roles/{id}', 'API\RolesController@destroy')->name('roles');
@@ -70,4 +77,7 @@ Route::group(['middleware' => 'auth:api', 'prefix' => '', 'as' => 'api.'], funct
 
         // Probes API
         Route::get('probes', 'API\ProbesController@index')->name('probes');
+
+        // Permissions API
+        Route::get('permission', 'API\PermissionsController@index')->name('permissions');
 });

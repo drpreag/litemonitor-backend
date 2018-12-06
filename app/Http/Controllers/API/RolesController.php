@@ -5,8 +5,10 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Role;
+use App\Permission;
 use App\Http\Resources\Role as RoleResource;
 use App\Http\Resources\RoleCollection;
+use App\Http\Resources\PermissionCollection;
 
 class RolesController extends Controller
 {
@@ -17,10 +19,6 @@ class RolesController extends Controller
      */
     public function index(Request $request)
     {
-        //$page = intval ($request->input('page', 1));
-        //$per_page = intval ($request->input('per_page', 15));
-        //$roles = Role::paginate($per_page, ['*'], 'page', $page);
-
         $roles = Role::orderby('id')->get();
         return new RoleCollection($roles);
     }
@@ -91,4 +89,17 @@ class RolesController extends Controller
             return false;
         }
     }
+
+    /**
+     * Display a listing of the resource.
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function permissions($id)
+    {
+        $role_id = intval($id);
+        $permissions = Permission::where('role_id', $role_id)->orderby('role_id')->get();
+        return new PermissionCollection($permissions);
+    }
 }
+
