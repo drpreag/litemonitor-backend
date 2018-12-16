@@ -35,7 +35,7 @@ class BasicAPIRoutesTests extends TestCase
             "email" => "alter_foo@bar.com",
             "active" => 0,
             "role_id" => 1,
-            "password" => "DFGH67skfglasdkf"
+            "password" => "secret"
         ];
         $response = $this->call('PUT', '/api/users', $data);
         $response->assertStatus(200);

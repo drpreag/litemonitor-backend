@@ -22,17 +22,18 @@
 		"spatie/ssl-certificate": "^1.12"
 	},
 	"require-dev" : {
-		"barryvdh/laravel-ide-helper" : "^2.4",
-		"filp/whoops" : "^2.0",
-		"fnayou/standards" : "^1.2",
-		"fzaninotto/faker" : "^1.4",
-		"mockery/mockery" : "^1.0",
-		"nunomaduro/collision" : "^2.0",
-		"pdepend/pdepend" : "@stable",
-		"phpunit/phpunit" : "@stable",
-		"phpunit/php-code-coverage": "^6.0",		
-		"pragmarx/laravelcs" : "^0.1.0",
-		"squizlabs/php_codesniffer" : "2.9.0"
+		"barryvdh/laravel-debugbar": "^3.2",
+		"barryvdh/laravel-ide-helper": "^2.4",
+		"filp/whoops": "^2.0",
+		"fnayou/standards": "^1.2",
+		"fzaninotto/faker": "^1.4",
+		"mockery/mockery": "^1.0",
+		"nunomaduro/collision": "^2.0",
+		"pdepend/pdepend": "@stable",
+		"phpunit/php-code-coverage": "^6.0",
+		"phpunit/phpunit": "@stable",
+		"pragmarx/laravelcs": "^0.1.0",
+		"squizlabs/php_codesniffer": "2.9.0"
 	},
 	"autoload" : {
 		"classmap" : [

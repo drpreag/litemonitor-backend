@@ -95,7 +95,7 @@ class Observation extends Model
         set_time_limit(0);
 
         if (! $service->hasProbe->socket_probe) {
-            return;
+            return false;
         }
 
         $starttime = microtime(true);
@@ -232,7 +232,7 @@ class Observation extends Model
         set_time_limit(5);
         
         if (! $service->hasProbe->mysql_probe) {
-            return;
+            return false;
         }
 
         $starttime = microtime(true);
@@ -267,7 +267,7 @@ class Observation extends Model
     public function sslProbe(Service &$service)
     {
         if (! $service->hasProbe->ssl_probe) {
-            return;
+            return false;
         }
         try {
             $certificate = SslCertificate::createForHostName($service->host->fqdn);
