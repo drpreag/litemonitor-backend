@@ -173,23 +173,6 @@ class HostsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @return json array
-     */
-    public function hostServices($id)
-    {
-        if (is_numeric($id)) {
-            $services = Service::where('host_id', $id)->get();
-
-            if ($services->count() > 0) {
-                return new ServiceCollection($services);
-            }
-        }
-        return null;
-    }
-
-    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -198,5 +181,20 @@ class HostsController extends Controller
     {
         $hosts = Host::orderBy('active', 'desc')->get();
         return new HostCollection($hosts);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function services($id)
+    {
+        if (is_numeric($id)) {
+            $services = Service::where('host_id', $id)->orderBy('probe_id')->get();
+            return new ServiceCollection($services);
+        }
+        return \Response::json(['error' => 'Resource not found' ], 404);
     }
 }
