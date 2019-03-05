@@ -16,17 +16,17 @@ use Illuminate\Http\Request;
 
 Route::group(['as' => 'api.'], function ()
 {
-//    Route::get('/', function (Request $request) {
-//        return \Response::json(['error' => 'Not nought privileges'], 401);
-//    });
+    Route::get('/', function (Request $request) {
+        return \Response::json(['Test Ok'], 200);
+    });
     Route::post('register', 'API\AuthController@register');
     Route::post('login', 'API\AuthController@login');
     Route::get('hosts-stats', 'API\HostsController@hostStats')->name('hoststats');
     Route::get('ip_addresses', 'API\HostsController@ipAddresses')->name('ip_addresses');
     Route::get('services-stats', 'API\ServicesController@serviceStats')->name('servicestats');
 });
-Route::group(['middleware' => 'auth:api', 'prefix' => '', 'as' => 'api.'], function () {
 
+Route::group(['middleware' => 'auth:api', 'prefix' => '', 'as' => 'api.'], function () {
         Route::post('logout', 'API\AuthController@logout');
         Route::get('whoami', function (Request $request) {
             if ($request->user()) {
